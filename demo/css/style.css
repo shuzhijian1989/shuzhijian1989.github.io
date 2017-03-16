@@ -1,0 +1,332 @@
+body,div,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dt,dd,a,span,input,img,tr,hr,br {margin:0; padding:0;}
+
+
+
+
+.contaion {
+	background: #f5f5f5;
+	padding:50px 0;
+}
+.contaion h3,
+.contaion h2,
+.contaion1 h2 {
+	
+	font-size:32px;
+	text-align:center;
+}
+.contaion h2 {
+
+}
+.contaion p {
+	color:#555;
+	line-height:32px;
+	text-align:center;
+	letter-spacing:1px;
+}
+
+.contaion .ftd li {
+	margin:30px 0;
+}
+.contaion .ftd li:not(.liborder) {
+	border-left:1px solid #333;
+}
+.contaion .ftd li p {
+	color:blue;
+	margin:10px 0;
+}
+.contaion .ftd li i {
+	width:60px;
+	height:50px;
+	display: block;
+	margin:0 auto;
+}
+.contaion .ftd1 {
+	background:url(../image/1a.png) no-repeat;
+}
+
+.contaion .ftd li:hover .ftd1 {
+	background:url(../image/1.png) no-repeat;
+}
+.contaion .ftd2{
+	background:url(../image/2a.png) no-repeat;
+}
+.contaion .ftd li:hover .ftd2 {
+	background:url(../image/2.png) no-repeat;
+}
+.contaion .ftd3 {
+	background:url(../image/3a.png) no-repeat;
+}
+.contaion .ftd li:hover .ftd3 {
+	background:url(../image/3.png) no-repeat;
+}
+.contaion .ftd4 {
+	background:url(../image/4a.png) no-repeat;
+}
+.contaion .ftd li:hover .ftd4 {
+	background:url(../image/4.png) no-repeat;
+}
+
+.contaion1 .lih6 {
+	color:#fff;
+	padding-top:75px;
+	text-align: center;
+	font-size:34px;
+	position:relative;
+}
+.contaion1 .lih6 i {
+	display: block;
+	width:50%;
+	height:100px;
+	margin:0 auto;
+	border:3px solid transparent;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-top:-50px;
+	margin-left:-25%;border-color: #fff;
+	-webkit-transform: scale(0);
+	-ms-transform: scale(0);
+	-moz-transform: scale(0);
+	-o-transform: scale(0);
+	transform: scale(0);
+}
+.contaion1 .lih6:hover i {
+	-webkit-transform: scale(1);
+	-ms-transform: scale(1);
+	-moz-transform: scale(1);
+	-o-transform: scale(1);
+	transform: scale(1);
+}
+.contaion1 li {
+	padding:5% 0;
+}
+.contaion1 .lispa {
+	background:#f5f5f5;
+}
+.contaion1 .lispa h4 {
+	font-size:22px;
+	color:green;
+	text-align:center;
+}
+.contaion1 .lispa p {
+	color:#999;
+	text-align: center
+}
+.contaion1 .lispa1 {
+	background:url(../image/sp1.jpg) no-repeat;
+	background-size:cover;
+}
+.contaion1 .lispa2 {
+	background:url(../image/sp2.jpg) no-repeat;
+	background-size:cover;
+}
+.contaion1 .lispa3{
+	background:url(../image/sp3.jpg) no-repeat;
+	background-size:cover;
+}
+.contaion1 .lispa4 {
+	background:url(../image/sp4.jpg) no-repeat;
+	background-size:cover;
+}
+
+.contaion2 {
+	background: url(../image/3.jpg) no-repeat;
+	background-size:cover;
+	height:450px;
+	padding-top:30px;
+}
+.contaion2 h2 {
+	text-align:center;
+}
+.contaion2 ul {
+	padding-top:150px;
+}
+.contaion2 i {
+	display: block;
+	width:50px;
+	height:44px;
+	margin:0 auto;
+	background-position:no-repeat;
+	background-size:cover;
+}
+.contaion2 li {
+	text-align:center;
+}
+.contaion2 .bgrd1 {
+	background:url(../image/srpa.png) -32px -15px;
+}
+.contaion2 .bgrd2 {
+	background:url(../image/srpa.png) -319px -18px;
+} 
+.contaion2 .bgrd3 {
+	background:url(../image/srpa.png) -600px -18px;
+}
+.contaion2 .bgrd4 {
+	background:url(../image/srpa.png) -319px -18px;
+}
+
+.contaion3 li {
+	margin:20px 10px;
+	border:1px solid #999;
+	
+
+}
+.contaion3 li:hover,
+.contaion1 .lih6 i:hover {
+	-webkit-transform: scale(1.05,1.05);
+	-moz-transform: scale(1.05,1.05);
+	-o-transform: scale(1.05,1.05);
+	-ms-transform: scale(1.05,1.05);
+	transform: scale(1.05,1.05);
+}
+.contaion3 li:nth-of-type(1) div,
+.contaion3 li:nth-of-type(1) button {
+	color:#fff;
+	background:#00ACEE;
+}
+
+.contaion3 li:nth-of-type(2) div,
+.contaion3 li:nth-of-type(2) button{
+	color:#fff;
+	background: #f85993;
+}
+.contaion3 li:nth-of-type(3) div,
+.contaion3 li:nth-of-type(3) button{
+	color:#fff;
+	background:#209a20;
+}
+.contaion3 li:nth-of-type(4) div,
+.contaion3 li:nth-of-type(4) button{
+	color:#fff;
+	background:#DD4B39;
+}
+.contaion3 .plan p {
+	color:#fff;
+}
+.contaion3 .plan h4 {
+	padding:10px 0;
+	background:rgba(105, 103, 90, 0.12);
+}
+.contaion3 .contaion3-plans {
+	text-align:center;
+}
+.contaion3 .contaion3-plans p {
+	height:50px;
+	line-height:50px;
+	color:#999;
+	border-bottom:1px solid #999;
+
+}
+.contaion3 .contaion3-plans button  {
+	margin:30px 0;
+	padding:10px 15px;
+	border:none;
+	border-radius:25px;
+	color:#fff;
+}
+
+/*footer  页脚*/
+.footer-contant {
+	background:#212121;
+	padding:30px 0;
+}
+.footer-contant li h5,
+.footer-contant .footer-form h3 {
+	padding:24px 0 10px 0;
+	font-weight:300;
+	font-size:17px;
+	margin-bottom:16px;
+	letter-spacing:1px;
+}
+
+.footer-contant .imga {
+	display:block;
+}
+.footer-contant .imga img {
+	width: 50%;
+	height:50%;
+	display:block;
+	float:left;
+}
+.footer-contant .lispan {
+	text-align:center;
+}
+.footer-contant .lispan span {
+	display: inline-block;
+	width:40px;
+	height:40px;
+	background-size:cover;
+}
+.footer-contant .lispan1 {
+	 background:url(../image/xbt.png);
+}
+
+.footer-contant .lispan2 {
+	 background:url(../image/xbt.png) -57px ;
+}
+.footer-contant .lispan3 {
+	 background:url(../image/xbt.png) -117px;
+}
+.footer-contant .lispan4 {
+	 background:url(../image/xbt.png) -181px;
+}
+.footer-contant .lispan5 {
+	 background:url(../image/xbt.png) 37px;
+}
+
+.footer-contant .footer-form {
+	padding:20px;
+	border:1px solid #999;
+	text-align:center;
+	margin:20px auto;
+}
+
+.footer-contant .footer-form p {
+	color:#999;
+	margin-bottom:20px;
+}
+.footer-contant .footer-form input:first-child {
+	flex-grow:4;
+	border:none;
+	border-radius:35px;
+	padding:10px 0;
+	text-indent:20px;
+	color:#999;
+	background:#fff;
+	outline:none;
+	font-size:20px;
+}
+.footer-contant .footer-form input:last-child {
+	flex-grow:1;
+	padding:10px;
+	color:#fff;
+	border:0;
+	border-radius:35px;
+	background:#f85993;
+	margin-left:30px;
+}
+.footer-contant .footer-form input:last-child:hover {
+	background:#fe4445;
+}
+.footer .footer-copyr {
+	background:#00ACEE;
+	height:50px;
+}
+.footer .footer-copyr p {
+	color:#fff;
+	text-align:center;
+	line-height:50px;
+}
+
+
+/*回到顶部*/
+.Top {
+	width:32px;
+	height:32px;
+	display:none;
+	background:url(../image/move-top.png);
+	position:fixed;
+	bottom:3%;
+	right:2%;
+}
+#00ACEE #fe4445 #f85993 #DD4B39
