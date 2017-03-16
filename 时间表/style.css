@@ -3,7 +3,7 @@ margin:0;
 padding:0;
 	}
 body {
-background:#000;
+background:#999;
 background-size:cover;
 height: 100%;
 }
@@ -135,4 +135,11 @@ z-index: 99999;
 	0%{left:0;}
 	50%{left:86%;}
 	100%{left:0}
+}
+#divtxt {
+	width: 200px;
+	height:50px;
+	margin-left:50px;
+	font-size:36px;
+	color:green;
 }

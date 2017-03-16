@@ -111,7 +111,7 @@ window.onload=function(){
 		var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60); 
 		var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60); 
 		var cc = document.getElementById(divname); 
-		cc.innerHTML = "建哥哥温馨提醒："  + "<br/>"+year+"年"+month+"月"+day+"日还有："+day1+"天"+hour+"小时"+minute+"分"+second+"秒"; 
+		cc.innerHTML = "温馨提醒："  + "<br/>"+year+"年"+month+"月"+day+"日还有："+day1+"天"+hour+"小时"+minute+"分"+second+"秒"; 
 	} 
 
 	setInterval(function(){
@@ -137,25 +137,15 @@ window.onload=function(){
 	};
 	marquee();
 	var aMis=document.getElementById("audo");
-	// domes.onclick=function(){
-	// 	if(aMis.paused){
-	// 		aMis.play();
-	// 	}
-	// 	else{
-	// 		aMis.pause();
-	// 	}
-	// }
-	domes.addEventListener('touchstart',function(event){
+	domes.onclick=function(){
 		if(aMis.paused){
 			aMis.play();
 		}
 		else{
 			aMis.pause();
 		}
-	},false);
-}
-
-	// aAudi.addEventListener('onclick',function(event){
+	}
+	// domes.addEventListener('touchstart',function(event){
 	// 	if(aMis.paused){
 	// 		aMis.play();
 	// 	}
@@ -163,3 +153,20 @@ window.onload=function(){
 	// 		aMis.pause();
 	// 	}
 	// },false);
+
+
+	var Divtxt=document.getElementById('divtxt');
+	Divtxt.className='animated tada infinite'
+	 setTimeout(function(){
+       Divtxt.style.display='none'
+    },9000);
+
+	// domes.addEventListener('onclick',function(event){
+	// 	if(aMis.paused){
+	// 		aMis.play();
+	// 	}
+	// 	else{
+	// 		aMis.pause();
+	// 	}
+	// },false);
+}
