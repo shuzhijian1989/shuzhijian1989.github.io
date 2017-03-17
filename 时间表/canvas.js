@@ -115,7 +115,7 @@ window.onload=function(){
 	} 
 
 	setInterval(function(){
-		ShowCountDown(2018,12,30,'lunbo2Span');
+		ShowCountDown(2018,1,1,'lunbo2Span');
 	}, interval); 
 
 	
