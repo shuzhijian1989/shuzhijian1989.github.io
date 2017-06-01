@@ -1,0 +1,12 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"schemaId": 1,
+		"schemaName": "gjyf_data1",
+		"id": 1,
+		"routineName": "存储过程或函数名",
+		"routineType": "func",
+		"defineSql": "delete......"
+	}
+}

@@ -1,0 +1,39 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 1,
+            "manId": 1,
+            "website": "数据来源网站 ",
+            "name": "姓名",
+            "company": "所在公司",
+            "year": "年度",
+            "totalReturn": "期间收益 ",
+            "avgReturn": "行业平均 ",
+            "hs300": "沪深300",
+            "rank": "收益排名",
+            "section": "排名区间",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "manId": 2,
+            "website": "数据来源网站 ",
+            "name": "姓名",
+            "company": "所在公司",
+            "year": "年度", 
+            "totalReturn": "期间收益 ", 
+            "avgReturn": "行业平均 ",
+            "hs300": "沪深300",
+            "rank": "收益排名",
+            "section": "排名区间",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

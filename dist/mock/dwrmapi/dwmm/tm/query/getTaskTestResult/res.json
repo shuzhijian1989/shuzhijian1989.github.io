@@ -1,0 +1,8 @@
+{
+    "sta": 1,
+    "data": {
+        "taskName": "test",
+        "log": "时间:2017-03-22 18:26:18\nTask start successful\n时间:2017-03-22 18:26:19\nTask is running\n开始->执行模块[1],模块类型[basis]\n时间:2017-03-22 18:26:21\nTask is running\n結束->执行模块[1],模块类型[basis]\n时间:2017-03-22 18:26:21\nTask is running\n开始->执行模块[2],模块类型[loop]\n时间:2017-03-22 18:26:22\nTask is running\n开始->循环外部\n时间:2017-03-22 18:26:22\nTask is running\n结束->循环外部\n时间:2017-03-22 18:26:22\nTask is running\n开始->循环内部\n时间:2017-03-22 18:26:22\nTask is running\n结束->循环内部\n时间:2017-03-22 18:26:22\nTask is running\n结束->执行模块[2],模块类型[loop]\n时间:2017-03-22 18:26:22\nTask is running\n开始->执行模块[3],模块类型[loop]\n时间:2017-03-22 18:26:23\nTask is running\n开始->循环外部\n时间:2017-03-22 18:26:23\nTask is running\n结束->循环外部\n时间:2017-03-22 18:26:23\nTask is running\n开始->循环内部\n时间:2017-03-22 18:26:23\nTask is running\n结束->循环内部\n时间:2017-03-22 18:26:23\nTask is running\n结束->执行模块[3],模块类型[loop]\n时间:2017-03-22 18:26:23\nTask is done\n"
+    },
+    "msg": "ok"
+}

@@ -1,0 +1,24 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"schemaId": 1,
+		"schemaName": "gjyf_data1",
+		"schemaNameAlias": "oracle_da_1",
+		"buId": 1,
+		"buName": "业务线1",
+		"hostName": "旋风",
+		"hostIp": "192.168.20.1",
+		"dbTypeId": "1",
+		"dbTypeName": "oracle",
+		"dbPort": "11",
+		"dbUser": "zhangsan",
+		"dbPassword": "gjyf123",
+		"dbaName": "张三",
+		"dbaEmail": "zhang-san@gjyf.com",
+		"dbaPhone": "15555666565",
+		"isValid": 1,
+		"totalDiskSize": 1024,
+		"diskIncrSize": 512
+	}
+}

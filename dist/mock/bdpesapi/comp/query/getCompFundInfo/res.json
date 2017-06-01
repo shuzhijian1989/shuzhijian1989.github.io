@@ -1,0 +1,31 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "compFundId": 1,
+        "compId": 1,
+        "website": "数据来源网站",
+        "compFullName": "公司全称",
+        "fundName": "基金名称",
+        "fundCode": "基金编号",
+        "festablishTime": "成立时间",
+        "filingTime": "备案时间",
+        "fundType": "基金类型",
+        "filingStage": "基金备案阶段",
+        "isAfter": "Y|N 是否在暂行办法实施后成立 ",
+        "currency": "币种",
+        "managerName": "基金管理人名称 ",
+        "managerType": "管理类型",
+        "mandator": "托管人名称",
+        "majorInvestArea": "主要投资领域 ",
+        "operationState": "运作状态",
+        "fundLastUpdTime": "基金信息最后更新时间 ",
+        "specialTips": "基金协会特别提示（ 针对基金） ",
+        "reportMonth": "月报",
+        "reportHalfYear": "半年报",
+        "reportYear": "年报",
+        "reportQuarter": "季报",
+        "createTime": "",
+        "updateTime": ""
+    }
+}

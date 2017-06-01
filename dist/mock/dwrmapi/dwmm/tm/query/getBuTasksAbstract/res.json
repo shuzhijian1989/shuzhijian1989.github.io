@@ -1,0 +1,52 @@
+{
+    "sta": 1,
+	"msg": "成功",
+	"data": [
+		{
+			"buId": 1,
+			"buName": "业务线1",
+			"open": true,
+			"tasks": [
+				{
+					"taskId": 1,
+					"taskName": "任务1",
+					"isPublished": 1,
+					"isActive": 1,
+					"isLock": 0,
+					"isKill": 0,
+					"taskStatus": "Killed"
+				},{
+					"taskId": 2,
+					"taskName": "任务2",
+					"isPublished": 1,
+					"isActive": 1,
+					"isLock": 0,
+					"isKill": 0,
+					"taskStatus": "Init"
+				}
+			]
+		},{
+			"buId": 2,
+			"buName": "业务线2",
+			"tasks": [
+				{
+					"taskId": 3,
+					"taskName": "任务3",
+					"isPublished": 1,
+					"isActive": 1,
+					"isLock": 0,
+					"isKill": 0,
+					"taskStatus": "Killed"
+				},{
+					"taskId": 4,
+					"taskName": "任务4",
+					"isPublished": 1,
+					"isActive": 1,
+					"isLock": 0,
+					"isKill": 0,
+					"taskStatus": "Init"
+				}
+			]
+		}
+	]
+}
