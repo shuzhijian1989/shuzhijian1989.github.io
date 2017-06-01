@@ -12,11 +12,11 @@
 // APP_ROUTE = ''
 
 
-// SERVER = '/mock'
-// APP_ROUTE = ''
+SERVER = '/mock'
+APP_ROUTE = ''
 
 // SERVER = 'https://app.gjyf-qa.com.cn';
 // APP_ROUTE = ''
 
-  SERVER = 'https://shuzhijian1989.github.io/demo/'
-  APP_ROUTE = ''
+  // SERVER = 'https://shuzhijian1989.github.io/demo/'
+  // APP_ROUTE = ''
