@@ -1,0 +1,53 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 1,
+            "compId": 1,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "enclosure": "附件",
+            "reason": "原因",
+            "expireDate": "证书截止日期",
+            "firstDate": "首次发证日期",
+            "standard": "标准",
+            "productName": "产品名称",
+            "dateIssue": "发证日期",
+            "manufacture": "制造商",
+            "currentState": "当前状态",
+            "productFactory": "生产厂家",
+            "certificateCode": "证书编号",
+            "type": "型号/规格",
+            "certificateStatusChange": "证书状态改变日期",
+            "applicant": "申请人",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "enclosure": "附件",
+            "reason": "原因",
+            "expireDate": "证书截止日期",
+            "firstDate": "首次发证日期",
+            "standard": "标准",
+            "productName": "产品名称",
+            "dateIssue": "发证日期",
+            "manufacture": "制造商",
+            "currentState": "当前状态",
+            "productFactory": "生产厂家",
+            "certificateCode": "证书编号",
+            "type": "型号/规格",
+            "certificateStatusChange": "证书状态改变日期",
+            "applicant": "申请人",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

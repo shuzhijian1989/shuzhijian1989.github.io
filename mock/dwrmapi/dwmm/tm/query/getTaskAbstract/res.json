@@ -1,0 +1,15 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": [
+        {
+            "taskId": 1,
+            "taskName": "任务A",
+            "isPublished": 1,
+            "isActive": 1,
+            "isLock": 0,
+            "isKill": 0,
+            "taskStatus": "Exception"
+        }
+    ]
+}

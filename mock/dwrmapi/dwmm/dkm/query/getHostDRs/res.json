@@ -1,0 +1,32 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"pageNo": 1,
+		"pageSize": 20,
+		"totalPage": 1,
+		"totalCount": 10,
+		"result": [
+			{
+				"schemaId": 1,
+				"schemaName": "gjyf_da1",
+				"schemaNameAlias": "orical_1",
+				"buId": 1,
+				"buName": "业务线1",
+				"hostName": "旋风",
+				"hostIp": "192.168.20.16",
+				"dbTypeId": "1",
+				"dbTypeName": "sql",
+				"dbPort": "11",
+				"dbUser": "zhangsan",
+				"dbPassword": "gjyf123",
+				"dbaName": "张三",
+				"dbaEmail": "zhang-san@gjyf.com",
+				"dbaPhone": "15555666565",
+				"isValid": 1,
+				"totalDiskSize": 1024,
+				"diskIncrSize": 512
+			}
+		]
+	}
+}

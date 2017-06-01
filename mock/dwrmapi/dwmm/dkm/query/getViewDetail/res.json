@@ -1,0 +1,11 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"schemaId": 1,
+		"schemaName": "gjyf_data",
+		"id": 1,
+		"viewName": "表1",
+		"defineSql": "delete......"
+	}
+}

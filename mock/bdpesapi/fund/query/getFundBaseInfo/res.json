@@ -1,0 +1,54 @@
+{
+  "sta": 1,
+  "data": {
+    "result": [
+      {
+        "feeSubscription": "1.00%",
+        "createTime": "2017-05-04 16:12:32.0",
+        "fundCustodian": "工商银行",
+        "website": "金斧子",
+        "updateTime": "2017-05-09 17:38:37.0",
+        "foundationDate": "2005-11-28",
+        "fundTypeStrategy": "股票策略",
+        "closePeriod": "12个月",
+        "minPurchaseAmount": "100万",
+        "fundTypeStrategySon": "股票多头",
+        "id": 19762,
+        "fundId": 5,
+        "fundStatus": "运行中",
+        "fundOrgType": "信托",
+        "feeRedeem": "3.00%",
+        "fundFullName": "华润信托-明达证券投资集合资金信托计划",
+        "openDate": "每月15日及最后一个交易日",
+        "fundManager": "刘明达",
+        "feeManage": "1.00%"
+      },
+      {
+        "feeSubscription": "1%",
+        "createTime": "2017-05-04 16:15:29.0",
+        "redeemAppdateText": "委托人需在其拟进行赎回的开放日的十个工作日前向受托人提交赎回申请",
+        "redeemFundDeliveredText": "受托人在赎回开放日后五个工作日内将信托份额明细表及划款指令转交保管银行。保管银行根据受托人出具的划款指令将赎回资金向一般受益人信托利益分配账户划拨。",
+        "website": "中国财富网",
+        "updateTime": "2017-05-09 17:38:37.0",
+        "foundationDate": "2005-11-28",
+        "fundTypeStrategy": "股票策略",
+        "minAppendAmount": "10.00元",
+        "minPurchaseAmount": "100.00万",
+        "id": 25162,
+        "fundId": 5,
+        "fundStatus": "正常",
+        "redeeRestriction": "(一) 持有期限要求1、除非触发特别赎回条件，委托人不可以赎回封闭期内的信托单位。委托人赎回因信托利益分配而直接转化的信托单位不受此限制。2、委托人可以赎回准封闭期内的信托单位，但须向信托计划支付赎回费用，赎回费用归属于信托财产。委托人赎回因信托利益分配而直接转化的信托单位不受此限制。3、委托人可以赎回持有期限超过准封闭期的信托单位，且无需缴纳任何赎回费用。 (二) 持有金额要求委托人可以部分或全部赎回信托单位。部分赎回的，赎回后委托人最低持有的信托单位份数与赎回申请日之前最近一个开放日的信托单位净值之乘积不得低于人民币100万元，否则受托人不接受其赎回申请，除非委托人全部赎回。",
+        "feeRedeem": "3.00%",
+        "fundFullName": "华润信托-明达证券投资集合资金信托计划",
+        "openDate": "每月15日及最后一个工作日",
+        "fundManager": "刘明达",
+        "feePay": "20%"
+      }
+    ],
+    "totalCount": 2,
+    "pageNo": 1,
+    "pageSize": 20,
+    "totalPage": 1
+  },
+  "msg": "成功"
+}

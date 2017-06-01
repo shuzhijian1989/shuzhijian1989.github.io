@@ -1,0 +1,46 @@
+{
+  "sta": 1,
+  "data": {
+    "result": [
+      {
+        "representive": "兴业鑫成7号集合计划",
+        "createTime": "2017-04-26 13:44:53.0",
+        "careerBackground": "公募",
+        "manId": 1,
+        "updateTime": "2017-05-10 14:44:07.0",
+        "website": "中国财富网",
+        "introduce": "兴证证券资产管理有限公司副总经理，浙江大学经济学硕士。主要从事过机械、汽车、交通运输、家电、消费品等行业和上市公司研究，对宏观经济、市场策略等领域也有所涉及；擅长个股深度挖掘和精研，在业内具有较高的知名度和影响力。",
+        "fundNum": "3",
+        "latestNav": "1.5040",
+        "id": 749,
+        "orientationAmac": "其他",
+        "name": "宫晓萱",
+        "eduBackground": "学历：硕士",
+        "company": "兴业证券",
+        "years": "--",
+        "investIdea": "--"
+      },
+      {
+        "representive": "兴业鑫成7号集合计划",
+        "createTime": "2017-04-26 13:48:01.0",
+        "careerBackground": "非公募",
+        "manId": 1,
+        "updateTime": "2017-05-10 14:44:07.0",
+        "website": "中投在线",
+        "introduce": "兴证证券资产管理有限公司副总经理，浙江大学经济学硕士。主要从事过机械、汽车、交通运输、家电、消费品等行业和上市公司研究，对宏观经济、市场策略等领域也有所涉及；擅长个股深度挖掘和精研，在业内具有较高的知名度和影响力。",
+        "fundNum": "2只",
+        "latestNav": "1.504",
+        "id": 3577,
+        "totalReturn": "50.4%",
+        "name": "宫晓萱",
+        "eduBackground": "学历： 硕士",
+        "company": "兴业证券"
+      }
+    ],
+    "totalCount": 2,
+    "pageNo": 1,
+    "pageSize": 20,
+    "totalPage": 1
+  },
+  "msg": "成功"
+}

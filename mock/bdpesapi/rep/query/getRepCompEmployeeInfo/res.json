@@ -1,0 +1,39 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 1,
+            "compId": 1,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "post": "岗位",
+            "age": "年龄",
+            "workYear": "工作年限",
+            "graduated": "毕业院校",
+            "sex": "性别",
+            "salary": "预估薪资",
+            "cattleIndex": "牛人指数",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "post": "岗位",
+            "age": "年龄",
+            "workYear": "工作年限",
+            "graduated": "毕业院校",
+            "sex": "性别",
+            "salary": "预估薪资",
+            "cattleIndex": "牛人指数",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

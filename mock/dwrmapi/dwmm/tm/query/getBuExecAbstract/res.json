@@ -1,0 +1,27 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+	"pageNo": 1,
+	"pageSize": 20,
+	"totalPage": 1,
+	"totalCount": 10,
+	"result": [
+		{
+			"buId": 1,
+			"buName": "任务1",
+			"totalExecCount": 3,
+			"sucesCount": 1,
+			"failCount": 1,
+			"runCount": 1
+		},{
+			"buId": 2,
+			"buName": "任务2",
+			"totalExecCount": 5,
+			"sucesCount": 1,
+			"failCount": 3,
+			"runCount": 1
+		}
+	]
+	}
+}

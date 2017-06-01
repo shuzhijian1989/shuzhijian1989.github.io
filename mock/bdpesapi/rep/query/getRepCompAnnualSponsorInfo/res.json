@@ -1,0 +1,41 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+                "id": 1,
+                "compId": 1,
+                "website": "数据来源网站 ",
+                "compFullName": "公司全称 ",
+                "reportYear": "2017年度",
+                "shareholder": "股东 ",
+                "contribution": "认缴出资额（ 万元） ",
+                "contributionTime": "认缴出资日期",
+                "contributionMode": "认缴出资方式",
+                "paid": "实缴出资额",
+                "paidTime": "实缴出资时间 ",
+                "paidMode": "实缴出资方式 ",
+                "createTime": "",
+                "updateTime": ""
+            }, {
+                "id": 2,
+                "compId": 2,
+                "website": "数据来源网站 ",
+                "compFullName": "公司全称 ",
+                "reportYear": "2016年",
+                "shareholder": "股东 ",
+                "contribution": "认缴出资额（ 万元） ",
+                "contributionTime": "认缴出资日期",
+                "contributionMode": "认缴出资方式",
+                "paid": "实缴出资额",
+                "paidTime": "实缴出资时间 ",
+                "paidMode": "实缴出资方式 ",
+                "createTime": "",
+                "updateTime": ""
+        }]
+    }
+}
