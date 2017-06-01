@@ -10,7 +10,7 @@ export const API_STATUS = {
 }
 
 const AjaxConf = {
-    method: 'POST',
+    method: 'GET',
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json;charset=UTF-8'

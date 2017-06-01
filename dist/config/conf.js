@@ -18,5 +18,5 @@ APP_ROUTE = ''
 // SERVER = 'https://app.gjyf-qa.com.cn';
 // APP_ROUTE = ''
 
-  // SERVER = 'https://shuzhijian1989.github.io/demo/'
+  // SERVER = 'https://shuzhijian1989.github.io/'
   // APP_ROUTE = ''
