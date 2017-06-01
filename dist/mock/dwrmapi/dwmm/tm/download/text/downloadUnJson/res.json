@@ -1,7 +1,0 @@
-{
-    "sta": 1,
-    "msg": "成功",
-    "data": {
-        "info": "#!/usr/bin/python\r\n\r\nfor letter in 'Python':     # First Example\r\n   if letter == 'h':\r\n      break\r\n   print 'Current Letter :', letter\r\n  \r\nvar = 10                    # Second Example\r\nwhile var > 0:              \r\n   print 'Current variable value :', var\r\n   var = var -1\r\n   if var == 5:\r\n      break \r\n\r\nprint \"Good bye!\""
-    }
-}
