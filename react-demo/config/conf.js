@@ -12,7 +12,7 @@
 // SERVER = 'http://192.168.86.89:8170';
 // APP_ROUTE = ''
 
-SERVER = '/mock'
+SERVER = '/dist/mock'
 APP_ROUTE = ''
 
 // SERVER = 'https://app.gjyf-qa.com.cn';
