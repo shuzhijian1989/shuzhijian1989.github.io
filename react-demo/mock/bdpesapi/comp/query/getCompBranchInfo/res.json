@@ -1,0 +1,27 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": [{
+        "id": 1,
+        "compId": 1,
+        "website": "数据来源网站",
+        "compFullName": "公司全称 ",
+        "changeTime": "变更日期",
+        "changeItem": "变更项目",
+        "beforChange": "变更前",
+        "afterChange": "变更后",
+        "createTime": "",
+        "updateTime": ""
+    }, {
+        "id": 2,
+        "compId": 2,
+        "website": "数据来源网站",
+        "compFullName": "公司全称 ",
+        "changeTime": "变更日期",
+        "changeItem": "变更项目",
+        "beforChange": "变更前",
+        "afterChange": "变更后",
+        "createTime": "",
+        "updateTime": ""
+    }]
+}

@@ -1,0 +1,40 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"pageNo": 1,
+		"pageSize": 20,
+		"totalPage": 1,
+		"totalCount": 10,
+		"result": [
+			{
+				"taskId": 1,
+				"taskName": "任务A",
+				"buId": 1,
+				"buName": "业务A",
+				"taskStatus": "Run",
+				"taskExecDatetime": "2011-03-11 12:11:14",
+				"hostIp": "192.168.20.12",
+				"hostPid": "1",
+				"taskExecptReason": "Unkown",
+				"startTime": "2017-03-11 11:15:11",
+				"endTime": "2017-03-12 13:52:23",
+				"execTime": 1000
+			},
+			{
+				"taskId": 2,
+				"taskName": "任务B",
+				"buId": 2,
+				"buName": "业务B",
+				"taskStatus": "Run",
+				"taskExecDatetime": "2011-03-12 15:11:14",
+				"hostIp": "192.168.20.14",
+				"hostPid": "1",
+				"taskExecptReason": "Unkown",
+				"startTime": "2017-03-11 10:15:11",
+				"endTime": "2017-03-16 13:52:23",
+				"execTime": 1000
+			}
+		]
+	}
+}

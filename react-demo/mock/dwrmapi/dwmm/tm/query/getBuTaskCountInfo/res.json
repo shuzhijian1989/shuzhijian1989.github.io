@@ -1,0 +1,9 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"totalNums": 20,
+		"active": 3,
+		"buId": 1
+		}
+}

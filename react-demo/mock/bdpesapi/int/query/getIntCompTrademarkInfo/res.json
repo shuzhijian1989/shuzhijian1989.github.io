@@ -1,0 +1,45 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 1,
+            "compId": 1,
+            "website": "数据来源网站 ",
+            "compFullName": "公司全称 ",
+            "picUrl": "商标图片url ",
+            "tmName": "商标名",
+            "tmTime": "申请时间",
+            "regCode": "注册号",
+            "type": "类别",
+            "state": "商标状态",
+            "serviceList": "商品服务列表 ",
+            "brandFlow": "商标流程 ",
+            "usePeriod": "使用期限 ",
+            "agency": "代理机构",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站2 ",
+            "compFullName": "公司全称 2",
+            "picUrl": "商标图片url2 ",
+            "tmName": "商标名",
+            "tmTime": "申请时间",
+            "regCode": "注册号",
+            "type": "类别",
+            "state": "商标状态",
+            "serviceList": "商品服务列表 ",
+            "brandFlow": "商标流程 ",
+            "usePeriod": "使用期限 ",
+            "agency": "代理机构",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

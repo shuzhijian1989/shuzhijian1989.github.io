@@ -1,0 +1,45 @@
+{
+  "sta": 1,
+  "data": [
+    {
+      "id": 638,
+      "compId": 732,
+      "compFullName": "青骓投资管理有限公司",
+      "createTime": "2017-05-23 13:18:57.0",
+      "shareholderName": "张烨",
+      "shareholdingRatio": "65.00%",
+      "shareholderType": "自然人",
+      "website": "企查查",
+      "updateTime": "2017-05-23 14:53:18.0",
+      "contribution": "13000.000000",
+      "contributionTime": "-"
+    },
+    {
+      "id": 639,
+      "compId": 732,
+      "compFullName": "青骓投资管理有限公司",
+      "createTime": "2017-05-23 13:18:57.0",
+      "shareholderName": "深圳市威华轩信息咨询有限公司",
+      "shareholdingRatio": "25.00%",
+      "shareholderType": "企业法人",
+      "website": "企查查",
+      "updateTime": "2017-05-23 14:53:18.0",
+      "contribution": "5000.000000",
+      "contributionTime": "-"
+    },
+    {
+      "id": 640,
+      "compId": 732,
+      "compFullName": "青骓投资管理有限公司",
+      "createTime": "2017-05-23 13:18:57.0",
+      "shareholderName": "张志斌",
+      "shareholdingRatio": "10.0%",
+      "shareholderType": "自然人",
+      "website": "企查查",
+      "updateTime": "2017-05-23 14:53:18.0",
+      "contribution": "2000.000000",
+      "contributionTime": "-"
+    }
+  ],
+  "msg": "成功"
+}

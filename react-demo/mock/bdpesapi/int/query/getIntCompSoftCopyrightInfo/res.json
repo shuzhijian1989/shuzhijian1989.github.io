@@ -1,0 +1,35 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站 ",
+            "compFullName": "公司全称 ",
+            "name": "名称",
+            "regCode": "登记号",
+            "sortCode": "分类号",
+            "aprovTime": "登记日期 ",
+            "versionCode": "版本号 ",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站 ",
+            "compFullName": "公司全称 ",
+            "name": "名称",
+            "regCode": "登记号",
+            "sortCode": "分类号",
+            "aprovTime": "登记日期 ",
+            "versionCode": "版本号 ",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

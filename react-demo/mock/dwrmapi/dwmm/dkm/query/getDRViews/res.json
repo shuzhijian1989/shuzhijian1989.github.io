@@ -1,0 +1,18 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": [
+		{
+			"schemaId": 1,
+			"schemaName": "gjyf_data1",
+			"id": 1,
+			"viewName": "表1"
+		},
+		{
+			"schemaId": 2,
+			"schemaName": "gjyf_data2",
+			"id": 2,
+			"viewName": "表2"
+		}
+	]
+}

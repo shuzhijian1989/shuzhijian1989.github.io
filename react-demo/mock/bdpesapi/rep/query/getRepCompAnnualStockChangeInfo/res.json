@@ -1,0 +1,35 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 1,
+            "compId": 1,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "reportYear": "年度",
+            "shareholder": "股东",
+            "befRatio": "变更前持股比例",
+            "aftRatio": "变更后持股比例",
+            "changeTime": "股权变更日期",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "reportYear": "年度",
+            "shareholder": "股东",
+            "befRatio": "变更前持股比例",
+            "aftRatio": "变更后持股比例",
+            "changeTime": "股权变更日期",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

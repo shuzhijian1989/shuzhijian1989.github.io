@@ -1,0 +1,63 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"info": {
+			"taskId": 1,
+			"taskName": "任务A",
+			"isPublished": 1,
+			"isActive": 1,
+			"isLock": 0,
+			"isKill": 0,
+			"taskStatus": "Done"
+		},
+		"depends": [
+			{
+				"info": {
+					"taskId": 2,
+					"taskName": "任务B",
+					"isPublished": 1,
+					"isActive": 1,
+					"isLock": 0,
+					"isKill": 0,
+					"taskStatus": "Run"
+				},
+				"depends": [{
+					"info": {
+						"taskId": 3,
+						"taskName": "任务C",
+						"isPublished": 1,
+						"isActive": 1,
+						"isLock": 0,
+						"isKill": 0,
+						"taskStatus": "Run"
+					},
+					"depends": []
+				}]
+			},
+			{
+				"info": {
+					"taskId": 4,
+					"taskName": "任务D",
+					"isPublished": 1,
+					"isActive": 1,
+					"isLock": 0,
+					"isKill": 0,
+					"taskStatus": "Dead"
+				},
+				"depends": [{
+					"info": {
+						"taskId": 5,
+						"taskName": "任务F",
+						"isPublished": 1,
+						"isActive": 1,
+						"isLock": 0,
+						"isKill": 0,
+						"taskStatus": "Done"
+					},
+					"depends": []
+				}]
+			}
+		]
+	}
+}

@@ -1,0 +1,39 @@
+{
+    "sta": 1,
+    "msg": "成功",
+    "data": {
+        "pageNo": 1,
+        "pageSize": 20,
+        "totalPage": 1,
+        "totalCount": 10,
+        "result": [{
+            "id": 1,
+            "compId": 1,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "registerNumber": "登记编号",
+            "pledgor": "出质人",
+            "pledgee": "质权人",
+            "idCode": "证照/证件号码",
+            "pledgeEquityNumber": "出质股权数额",
+            "registerTime": "股权出质设立登记日期",
+            "state": "状态",
+            "createTime": "",
+            "updateTime": ""
+        }, {
+            "id": 2,
+            "compId": 2,
+            "website": "数据来源网站",
+            "compFullName": "公司全称",
+            "registerNumber": "登记编号",
+            "pledgor": "出质人",
+            "pledgee": "质权人",
+            "idCode": "证照/证件号码",
+            "pledgeEquityNumber": "出质股权数额",
+            "registerTime": "股权出质设立登记日期",
+            "state": "状态",
+            "createTime": "",
+            "updateTime": ""
+        }]
+    }
+}

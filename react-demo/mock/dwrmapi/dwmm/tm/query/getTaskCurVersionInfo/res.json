@@ -1,0 +1,9 @@
+{
+	"sta": 1,
+	"msg": "成功",
+	"data": {
+		"taskId": 1,
+		"taskVersion": "1.1.1",
+		"taskVersionDesc": "第一版"
+	}
+}
