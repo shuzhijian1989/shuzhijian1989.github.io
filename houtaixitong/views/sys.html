@@ -1,0 +1,282 @@
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+<script type="text/javascript" src="../jquery.min.js"></script>
+<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../common.js"></script>
+<style type="text/css">
+#fm {
+    margin: 0;
+    padding: 10px 30px;
+}
+
+.ftitle {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    padding: 5px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+    margin-bottom: 5px;
+}
+
+.fitem label {
+    display: inline-block;
+    width: 80px;
+}
+</style>
+<div id="crud_search" class="easyui-panel" title="搜索条件" style="width:100%;margin-bottom: 10px;">
+    <table cellpadding="5">
+        <tr>
+            <td>配置名称:</td>
+            <td>
+                <input id="paraname_s" class="easyui-textbox" type="text"></input>
+            </td>
+            <td></td>
+            <td>
+            </td>
+            <td></td>
+            <td>
+            </td>
+            <td></td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="GetList('1', '10');" data-options="iconCls:'icon-search'">搜索</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<table id="dg" title="" class="easyui-datagrid"></table>
+<div id="p" class="easyui-pagination"></div>
+<div id="dlg" class="easyui-dialog" style="padding:10px;" closed="true" buttons="#dlg-buttons">
+    <form id="fm">
+        <input id="crud_id" value="" style="display: none;"></input>
+        <input id="crud_type" value="0" style="display: none;"></input>
+        <div class="fitem">
+            <label>参数KEY</label>
+            <input id="parakey" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>参数名</label>
+            <input id="paraname" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>参数值1</label>
+            <input id="paravalue1" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>参数值2</label>
+            <input id="paravalue2" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>参数值3</label>
+            <input id="paravalue3" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>参数值4</label>
+            <input id="paravalue4" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>备注</label>
+            <input id="bz" class="easyui-textbox" data-options="multiline:true" style="height: 50px;"></input>
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
+<script type="text/javascript">
+var dg, curPage = 1;
+$(function() {
+    dg = $('#dg');
+    dg.datagrid({
+        width: '100%',
+        height: '500px',
+        rownumbers: true,
+        fitColumns: true,
+        singleSelect: true,
+        remoteSort: false,
+        toolbar: [{
+            text: '新增',
+            iconCls: 'icon-add',
+            handler: function() {
+                newRecord();
+            }
+        }, {
+            text: '编辑',
+            iconCls: 'icon-edit',
+            handler: function() {
+                editRecord();
+            }
+        }, {
+            text: '删除',
+            iconCls: 'icon-remove',
+            handler: function() {
+                deleteRecord();
+            }
+        }],
+        columns: [
+            [{
+                field: 'paraId',
+                title: '参数id',
+                hidden: true
+            }, {
+                field: 'parakey',
+                title: '参数Key'
+            }, {
+                field: 'paraname',
+                title: '参数名'
+            }, {
+                field: 'paravalue1',
+                title: '参数值1',
+                width: 100
+            }, {
+                field: 'paravalue2',
+                title: '参数值2',
+                width: 100
+            }, {
+                field: 'paravalue3',
+                title: '参数值3',
+                width: 100
+            }, {
+                field: 'paravalue4',
+                title: '参数值4',
+                width: 100
+            }, {
+                field: 'createDate',
+                title: '创建时间'
+            }, {
+                field: 'lastUpdateDate',
+                title: '上一次修改时间'
+            }]
+        ],
+    });
+    $('#dlg').dialog({
+        modal: true
+    });
+    // console.log(p);
+    $('#p').pagination({
+        beforePageText: '第 ',
+        afterPageText: '页 共 {pages} 页',
+        displayMsg: '当页显示 {from} 到 {to} 条记录 ,  共 {total} 条记录',
+        pageList: [10, 20, 30],
+        onSelectPage: function(pageNo, pageSize) {
+            curPage = pageNo;
+            GetList(pageNo, pageSize);
+        }
+    });
+    GetList(1, 10);
+});
+
+function GetList(pageNo, pageSize) {
+    var _url = '/sysconf/api/list';
+    var inputData = {
+        paraname: TValue('paraname_s'),
+        pageNo: pageNo + '',
+        pageSize: pageSize + ''
+    };
+    Pn.post(_url, inputData, function(respData) {
+        if (respData.sta) {
+            dg.datagrid({
+                data: respData.data.result
+            });
+            $('#p').pagination({
+                total: respData.data.totalCount,
+                pageSize: pageSize,
+                pageNumber: pageNo
+            });
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    })
+}
+
+function newRecord() {
+    $('#dlg').dialog('open').dialog('setTitle', '新增');
+    $('#fm').form('clear');
+    $('#crud_id').val('');
+}
+
+function saveRecord() {
+    var _url = '/sysconf/api/';
+    if ('1' == $('#crud_type').val()) {
+        _url += 'update';
+    } else {
+        _url += 'create';
+    }
+    var inputData = {
+        paraId: $('#crud_id').val(),
+        parakey: TValue('parakey'),
+        paraname: TValue('paraname'),
+        paravalue1: TValue('paravalue1'),
+        paravalue2: TValue('paravalue2'),
+        paravalue3: TValue('paravalue3'),
+        paravalue4: TValue('paravalue4'),
+        bz: TValue('bz')
+    };
+    if('1' == $('crud_type').val()){
+    }else{
+        delete inputData.paraId;
+    }
+    // console.log(inputData);
+    Pn.post(_url, inputData, function(respData) {
+        if (respData.sta) {
+            $('#dlg').dialog('close');
+            GetList(curPage, 10);
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    });
+}
+
+function editRecord() {
+    var row = $('#dg').datagrid('getSelected');
+    // row = 1;
+    if (row) {
+        $('#dlg').dialog('open').dialog('setTitle', '编辑');
+        $('#crud_id').val(row.paraId);
+        $('#crud_type').val('1');
+        //fill data
+        TValue('parakey', row.parakey);
+        $('#parakey').textbox({editable: false});
+        TValue('paraname', row.paraname);
+        TValue('paravalue1', row.paravalue1);
+        TValue('paravalue2', row.paravalue2);
+        TValue('paravalue3', row.paravalue3);
+        TValue('paravalue4', row.paravalue4);
+        TValue('bz', row.bz);
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+
+function deleteRecord() {
+    var row = $('#dg').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('确认', '确定删除？', function(r) {
+            if (r) {
+                var _url = '/sysconf/api/delete';
+                Pn.post(_url, {
+                    paraId: row.paraId,
+                    parakey: row.parakey
+                }, function(respData) {
+                    if (respData.sta) {
+                        GetList(curPage, 10);
+                    } else {
+                        ErrorPop('c', respData.msg);
+                    }
+                });
+            }
+        });
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+</script>

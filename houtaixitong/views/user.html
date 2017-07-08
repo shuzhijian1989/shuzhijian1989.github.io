@@ -1,0 +1,656 @@
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+<script type="text/javascript" src="../jquery.min.js"></script>
+<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../crypto-js.js"></script>
+<script type="text/javascript" src="../common.js"></script>
+<style type="text/css">
+.ftitle {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+    padding: 5px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+    margin-bottom: 5px;
+}
+
+.fitem label {
+    display: inline-block;
+    width: 80px;
+}
+</style>
+<div id="crud_search" class="easyui-panel" title="搜索条件" style="width:100%;margin-bottom: 10px;">
+    <table cellpadding="5">
+        <tr>
+            <td>所属应用：</td>
+            <td>
+                <select id="appid_s" class="easyui-combobox" style="width: 173px;"></select>
+            </td>
+            <td>用户名:</td>
+            <td>
+                <input id="username_s" class="easyui-textbox" type="text"></input>
+            </td>
+            <td>邮箱:</td>
+            <td>
+                <input id="email_s" class="easyui-textbox" type="text"></input>
+            </td>
+            <td>联系方式:</td>
+            <td>
+                <input id="mobile_s" class="easyui-textbox" type="text"></input>
+            </td>
+            <td>状态:</td>
+            <td>
+                <select id="isValid_s" class="easyui-combobox" style="width: 173px;">
+                    <option value="" selected>全部</option>
+                    <option value="1">有效</option>
+                    <option value="0">无效</option>
+                    <option value="4">未激活</option>
+                    <option value="3">锁定</option>
+                    <option value="5">临时</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="GetList('1', '10');" data-options="iconCls:'icon-search'">搜索</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<table id="dg" title="" class="easyui-datagrid"></table>
+<div id="p" class="easyui-pagination"></div>
+<div id="dlg" class="easyui-dialog" style="padding:10px;" closed="true" buttons="#dlg-buttons">
+    <form id="fm">
+        <input id="crud_id" value="" style="display: none;"></input>
+        <input id="crud_type" value="0" style="display: none;"></input>
+        <div id="tabs" class="easyui-tabs" style="width:700px;height:250px">
+            <div title="基本信息" style="padding:10px">
+                <!-- <form id="fm"> -->
+                <input id="crud_id" value="" style="display: none;"></input>
+                <input id="crud_type" value="0" style="display: none;"></input>
+                <div class="fitem">
+                    <label>用户名</label>
+                    <input id="username" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>姓名</label>
+                    <input id="realname" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>邮箱</label>
+                    <input id="email" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>手机</label>
+                    <input id="mobile" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>企业</label>
+                    <select id="companydef" class="easyui-combobox" style="width: 173px;"></select>
+                    <!-- <input id="companydef" class="easyui-textbox"> -->
+                </div>
+                <div class="fitem">
+                    <label>部门</label>
+                    <input id="department" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>职位</label>
+                    <input id="position" class="easyui-textbox">
+                </div>
+                <div class="fitem">
+                    <label>是否有效</label>
+                    <select id="isValid" class="easyui-combobox" style="width: 173px;">
+                        <option value="1" selected>有效</option>
+                        <option value="0">无效</option>
+                        <option value="4">未激活</option>
+                        <option value="3">锁定</option>
+                        <option value="5">临时</option>
+                    </select>
+                </div>
+                <!-- </form> -->
+            </div>
+            <div title="扩展信息" style="padding:10px">
+                <table id="dg1" title="" class="easyui-datagrid"></table>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRecord()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
+<div id="dlg1" class="easyui-dialog" style="padding:10px;" closed="true" buttons="#dlg-buttons1">
+    <form id="fm1">
+        <input id="crud_id1" value="" style="display: none;"></input>
+        <div class="fitem">
+            <label>用户名</label>
+            <input id="username1" class="easyui-textbox" data-options="disabled:true">
+        </div>
+        <div class="fitem">
+            <label>邮箱</label>
+            <input id="email1" class="easyui-textbox" data-options="disabled:true">
+        </div>
+        <div class="fitem">
+            <label>手机</label>
+            <input id="mobile1" class="easyui-textbox" data-options="disabled:true">
+        </div>
+        <div class="fitem" style="text-align: center;">
+            <label style="width: 200px;font-weight: bold;">用户对应的角色</label>
+        </div>
+        <div class="fitem">
+            <ul id="tt" class="easyui-tree" style="height: 200px;overflow: scroll;overflow-x: hidden;border: 1px solid #655"></ul>
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons1">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveRole()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg1').dialog('close')">取消</a>
+</div>
+<div id="dlg2" class="easyui-dialog" style="padding:10px;" closed="true" buttons="#dlg-buttons2">
+    <form id="fm2">
+        <input id="crud_id2" value="" style="display: none;"></input>
+        <input id="crud_type2" value="0" style="display: none;"></input>
+        <div class="fitem">
+            <label>属性名</label>
+            <input id="uaattrname" class="easyui-textbox">
+        </div>
+        <div class="fitem">
+            <label>属性值</label>
+            <input id="uaattrvalue" class="easyui-textbox">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons2">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUaAttr()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg2').dialog('close')">取消</a>
+</div>
+<div id="dlg3" class="easyui-dialog" style="padding:10px;" closed="true" buttons="#dlg-buttons3">
+    <form id="fm3">
+        <input id="crud_id3" value="" style="display: none;"></input>
+        <div class="fitem">
+            <label>密码</label>
+            <input id="pwd" name="pwd" type="password" class="easyui-validatebox" data-options="required:true" />
+        </div>
+        <div class="fitem">
+            <label>确认密码</label>
+            <input id="rpwd" name="rpwd" type="password" class="easyui-validatebox" required="required" validType="equals['#pwd']" />
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons3">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="savePsw()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg3').dialog('close')">取消</a>
+</div>
+<script type="text/javascript">
+var dg, dg1, curPage = 1;
+$(function() {
+    $.extend($.fn.validatebox.defaults.rules, {
+        equals: {
+            validator: function(value, param) {
+                return value == $(param[0]).val();
+            },
+            message: '两次密码不一致'
+        }
+    });
+
+    Pn.post('/appinfo/api/selelist', {
+        pageSize: '999'
+    }, function(respData) {
+        $('#appid_s').combobox({
+            valueField: 'appid',
+            textField: 'appname',
+            data: respData.data.result
+        });
+    });
+
+    Pn.post('/enterpriseinfo/api/list', {
+        pageSize: '999'
+    }, function(respData) {
+        $('#companydef').combobox({
+            valueField: 'eiid',
+            textField: 'entname',
+            data: respData.data.result
+        });
+    });
+
+    $('#tt').tree({
+        animate: true,
+        onlyLeafCheck: true,
+        checkbox: true
+    });
+
+    dg = $('#dg');
+    dg.datagrid({
+        width: '100%',
+        height: '500px',
+        rownumbers: true,
+        fitColumns: true,
+        singleSelect: true,
+        remoteSort: false,
+        toolbar: [{
+            id: "add",
+            text: '新增',
+            iconCls: 'icon-add',
+            handler: function() {
+                newRecord();
+            }
+        }, {
+            id: "edit",
+            text: '编辑',
+            iconCls: 'icon-edit',
+            handler: function() {
+                editRecord();
+            }
+        }, {
+            id: "detl",
+            text: '删除',
+            iconCls: 'icon-remove',
+            handler: function() {
+                deleteRecord();
+            }
+        }, {
+            id:"linkRole",
+            text: '关联角色',
+            iconCls: 'icon-filter',
+            handler: function() {
+                editRole();
+            }
+        }, {
+            id: "changeKeword"
+            text: '修改密码',
+            iconCls: 'icon-filter',
+            handler: function() {
+                editPsw();
+            }
+        }],
+        columns: [
+            [{
+                field: 'id',
+                title: '用户id',
+                hidden: true
+            }, {
+                field: 'username',
+                title: '用户名'
+            }, {
+                field: 'realname',
+                title: '姓名'
+            }, {
+                field: 'email',
+                title: 'E-mail'
+            }, {
+                field: 'mobile',
+                title: '手机'
+            }, {
+                field: 'companydefName',
+                title: '所属企业'
+            }, {
+                field: 'companydef',
+                title: '企业eiid',
+                hidden: true
+            }, {
+                field: 'isValid',
+                title: '状态id',
+                hidden: true
+            }, {
+                field: 'isValidText',
+                title: '状态'
+            }, {
+                field: 'createDate',
+                title: '创建时间'
+            }, {
+                field: 'lastUpdateDate',
+                title: '上一次修改时间'
+            }]
+        ],
+    });
+    dg1 = $('#dg1');
+    dg1.datagrid({
+        width: '97%',
+        height: '500px',
+        rownumbers: true,
+        fitColumns: true,
+        singleSelect: true,
+        remoteSort: false,
+        toolbar: [{
+            id: "add",
+            text: '新增',
+            iconCls: 'icon-add',
+            handler: function() {
+                newUaAttr();
+            }
+        }, {
+            id: "edit",
+            text: '编辑',
+            iconCls: 'icon-edit',
+            handler: function() {
+                editUaAttr();
+            }
+        }, {
+            id: "detl",
+            text: '删除',
+            iconCls: 'icon-remove',
+            handler: function() {
+                deleteUaAttr();
+            }
+        }],
+        columns: [
+            [{
+                field: 'uaid',
+                title: '用户主键',
+                hidden: true
+            }, {
+                field: 'uaattrname',
+                title: '属性名'
+            }, {
+                field: 'uaattrvalue',
+                title: '属性值'
+            }]
+        ],
+    });
+    $('#dlg,#dlg1,#dlg2,#dlg3').dialog({
+        modal: true
+    });
+    // console.log(p);
+    $('#p').pagination({
+        beforePageText: '第 ',
+        afterPageText: '页 共 {pages} 页',
+        displayMsg: '当页显示 {from} 到 {to} 条记录 ,  共 {total} 条记录',
+        pageList: [10, 20, 30],
+        onSelectPage: function(pageNo, pageSize) {
+            curPage = pageNo;
+            GetList(pageNo, pageSize);
+        }
+    });
+    GetList(1, 10);
+});
+
+function GetList(pageNo, pageSize) {
+    var _url = '/user/api/list';
+    var inputData = {
+        appid: CValue('appid_s'),
+        username: TValue('username_s'),
+        email: TValue('email_s'),
+        mobile: TValue('mobile_s'),
+        isValid: CValue('isValid_s'),
+        pageNo: pageNo + '',
+        pageSize: pageSize + ''
+    };
+    Pn.post(_url, inputData, function(respData) {
+        if (respData.sta) {
+            dg.datagrid({
+                data: respData.data.result
+            });
+            $('#p').pagination({
+                total: respData.data.totalCount,
+                pageSize: pageSize,
+                pageNumber: pageNo
+            });
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    })
+}
+
+function GetList1(userid) {
+    var _url = '/userextinfo/api/list';
+    Pn.post(_url, {
+        userid: userid + ''
+    }, function(respData) {
+        if (respData.sta) {
+            dg1.datagrid({
+                data: respData.data
+            });
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    })
+}
+
+function newRecord() {
+    $('#dlg').dialog('open').dialog('setTitle', '新增');
+    $('#fm').form('clear');
+    $('#crud_id').val('');
+    dg1.datagrid({
+        data: []
+    });
+}
+
+function newUaAttr() {
+    $('#dlg2').dialog('open').dialog('setTitle', '新增');
+    $('#fm2').form('clear');
+    $('#crud_type2').val('0');
+}
+
+function saveRecord() {
+    var _url = '/user/api/';
+    if ('1' == $('#crud_type').val()) {
+        _url += 'update';
+    } else {
+        _url += 'create';
+    }
+
+    var inputData = {
+        id: $('#crud_id').val(),
+        username: TValue('username'),
+        realname: TValue('realname'),
+        email: TValue('email'),
+        mobile: TValue('mobile'),
+        companydef: CValue('companydef'),
+        isValid: CValue('isValid')
+    };
+    // console.log(inputData);
+    Pn.post(_url, inputData, function(respData) {
+        if (respData.sta) {
+            $('#dlg').dialog('close');
+            GetList(curPage, 10);
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    });
+}
+
+function saveUaAttr() {
+    var _url = '/userextinfo/api/';
+    var inputData = {
+        userid: $('#crud_id').val(),
+        uaattrname: TValue('uaattrname'),
+        uaattrvalue: TValue('uaattrvalue')
+    };
+    if ('1' == $('#crud_type').val()) {
+        inputData.eiid = $('#crud_id').val();
+    } else {
+        ErrorPop('c', '请先保存基本信息！');
+        return;
+    }
+    if ('1' == $('#crud_type2').val()) {
+        inputData.uaid = $('#crud_id2').val();
+        _url += 'update';
+    } else {
+        _url += 'create';
+    }
+    // console.log(inputData);
+    Pn.post(_url, inputData, function(respData) {
+        if (respData.sta) {
+            $('#dlg2').dialog('close');
+            GetList1($('#crud_id').val());
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    });
+}
+
+function editRecord() {
+    var row = $('#dg').datagrid('getSelected');
+    // row = 1;
+    if (row) {
+        $('#dlg').dialog('open').dialog('setTitle', '编辑');
+        console.log(row.id);
+        $('#crud_id').val(row.id); //id == userid
+        $('#crud_type').val('1');
+        //fill data
+        TValue('username', row.username);
+        $('#username').textbox({
+            editable: false
+        });
+        TValue('realname', row.realname);
+        TValue('email', row.email);
+        TValue('mobile', row.mobile);
+        CValue('companydef', row.companydef);
+        CValue('isValid', row.isValid);
+        GetList1(row.id);
+        // TValue('department', row.department);
+        // TValue('position', row.position);
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+
+function editUaAttr() {
+    var row = $('#dg1').datagrid('getSelected');
+    // row = 1;
+    if (row) {
+        $('#dlg2').dialog('open').dialog('setTitle', '编辑');
+        // console.log(row.id);
+        $('#crud_id2').val(row.uaid);
+        $('#crud_type2').val('1');
+        //fill data
+        TValue('uaattrname', row.uaattrname);
+        TValue('uaattrvalue', row.uaattrvalue);
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+
+function editRole() {
+    var row = $('#dg').datagrid('getSelected');
+    // row = 1;
+    if (row) {
+        $('#dlg1').dialog('open').dialog('setTitle', '用户---角色关联');
+        // console.log(row.id);
+        $('#crud_id1').val(row.id);
+        //fill data
+        TValue('username1', row.username);
+        TValue('email1', row.email);
+        TValue('mobile1', row.mobile);
+        TValue('appname', row.appName);
+        GetRole(row.id);
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+
+function editPsw() {
+    var row = $('#dg').datagrid('getSelected');
+    // row = 1;
+    if (row) {
+        $('#dlg3').dialog('open').dialog('setTitle', '修改密码');
+        // console.log(row.id);
+        $('#crud_id3').val(row.id);
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+
+function saveRole() {
+    var _url = '/role/api/roleall2user';
+    var nodes = $('#tt').tree('getChecked');
+    var nodes_len = nodes.length;
+    var resCode = '';
+    for (var i = 0; i < nodes_len; i++) {
+        resCode += ';' + nodes[i].id;
+    };
+    resCode = resCode.substr(1);
+    var inputData = {
+        userid: $('#crud_id1').val(),
+        roleids: resCode
+    };
+    // console.log(inputData);
+    Pn.post(_url, inputData, function(respData) {
+        if (respData.sta) {
+            $('#dlg1').dialog('close');
+            // GetList('1', '10');
+        } else {
+            ErrorPop('c', respData.msg);
+        }
+    });
+}
+
+function savePsw() {
+    var _url = '/user/api/pwdchange';
+    if ($('#rpwd').validatebox('isValid')) {
+        var psw = $('#rpwd').val();
+        var inputData = {
+            id: $('#crud_id3').val(),
+            passwd: CryptoJS.MD5(CryptoJS.MD5(psw) + psw).toString()
+        };
+        // console.log(inputData);
+        Pn.post(_url, inputData, function(respData) {
+            if (respData.sta) {
+                $('#dlg3').dialog('close');
+                // GetList('1', '10');
+            } else {
+                ErrorPop('c', respData.msg);
+            }
+        });
+    }
+}
+
+function GetRole(userid) {
+    Pn.post('/role/api/roleall4user', {
+        userid: userid
+    }, function(respData) {
+        $('#tt').tree({
+            data: respData.data
+        });
+    });
+}
+
+function deleteRecord() {
+    var row = $('#dg').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('确认', '确定删除？', function(r) {
+            if (r) {
+                var _url = '/user/api/delete';
+                Pn.post(_url, {
+                    id: row.id
+                }, function(respData) {
+                    if (respData.sta) {
+                        GetList(curPage, 10);
+                    } else {
+                        ErrorPop('c', respData.msg);
+                    }
+                });
+            }
+        });
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+
+function deleteUaAttr() {
+    var row = $('#dg1').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('确认', '确定删除？', function(r) {
+            if (r) {
+                var _url = '/userextinfo/api/delete';
+                Pn.post(_url, {
+                    uaid: row.uaid + ''
+                }, function(respData) {
+                    if (respData.sta) {
+                        GetList1(row.userid);
+                    } else {
+                        ErrorPop('c', respData.msg);
+                    }
+                });
+            }
+        });
+    } else {
+        ErrorPop('c', '没有选择任何数据！');
+    }
+}
+</script>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>国金涌富SSO后台管理系统</title>
+    <link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="themes/icon.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="common.js"></script>
+    <style type="text/css">
+    #h_logo {
+        float: left;
+        padding: 0;
+        width: 400px;
+        height: 50px;
+        border: none;
+        background-image: url(images/logo.png);
+        background-color: transparent;
+    }
+    
+    #h_info {
+        margin-top: 15px;
+        float: right;
+        width: 150px;
+        /*text-align: right;*/
+    }
+    </style>
+</head>
+
+<body class="easyui-layout">
+    <div data-options="region:'north',border:false" style="height:60px;background:#95b8e7;padding:5px;">
+        <div id="h_logo"></div>
+        <div id="h_info">
+            <a id="welcome_info" href="#" class="easyui-menubutton" data-options="menu:'#mm1',iconCls:'icon-man'">欢迎您，admin</a>
+        </div>
+    </div>
+    <div data-options="region:'west',title:'导航菜单'" style="width:150px;">
+        <div class="easyui-panel" style="width: 100%;height: 100%;border: none;">
+            <ul id="nav_menu" class="easyui-tree">
+               <!--  <li data-options="attributes:{'url':'app.html'}">应用系统管理</li>
+               <li data-options="attributes:{'url':'resource.html'}">资源管理</li>
+               <li data-options="attributes:{'url':'role.html'}">角色管理</li>
+               <li data-options="attributes:{'url':'user.html'}">用户管理</li>
+               <li data-options="attributes:{'url':'enterprise.html'}">企业信息管理</li>
+               <li data-options="attributes:{'url':'sys.html'}">系统配置</li>
+               <li data-options="attributes:{'url':'syslog.html'}">系统日志</li>
+               <li data-options="attributes:{'url':''}">
+                   <span>邀请码</span>
+                   <ul>
+                       <li data-options="attributes:{'url':'codeSet.html'}">
+                           <span>条件设置</span>
+                       </li>
+                       <li data-options="attributes:{'url':'codeType.html'}">
+                           <span>类型</span>
+                       </li>
+                       <li data-options="attributes:{'url':'codeCheck.html'}">
+                           <span>查看</span>
+                       </li>
+                   </ul>
+               </li> -->
+            </ul>
+        </div>
+    </div>
+    <div post"region:'south',border:false" style="height:30px;background:#95b8e7;padding:5px;text-align:center;">国金涌富资产管理有限公司 版权所有 备案号沪ICP备15047359号-1</div>
+    <div data-options="region:'center'" style="border:none;">
+        <div id="main_tabs" class="easyui-tabs" style="width:100%;height:100%;">
+            <div title="首页" style="padding:10px;">首页内容</div>
+        </div>
+    </div>
+    <div id="mm1" style="width:100px;">
+        <div data-options="iconCls:'icon-no'">退出</div>
+    </div>
+    <script type="text/javascript">
+    $(function() {
+        var data = [{
+                    id: 1,
+                    text: '应用系统管理',
+                    url: 'app.html'
+                },{
+                    id: 2,
+                    text: '资源管理',
+                    url: 'resource.html'
+                },{
+                    id: 3,
+                    text: '角色管理',
+                    url: 'role.html'
+                },{
+                    id: 4,
+                    text: '用户管理',
+                    url: 'user.html'
+                },{
+                    id: 5,
+                    text: '企业信息管理',
+                    url: 'enterprise.html'
+                },{
+                    id: 6,
+                    text: '系统配置',
+                    url: 'sys.html'
+                },{
+                    id: 7,
+                    text: '系统日志',
+                    url: 'syslog.html'
+                },{
+                    id: 8,
+                    text: '邀请码',
+                     url: '',
+                    children: [{
+                        id: 9,
+                        text: '条件设置',
+                        url: 'codeSet.html'
+                    },{
+                        id: 10,
+                        text: '类型',
+                        url: 'codeType.html'
+                    },{
+                        id: 11,
+                        text: '查看',
+                        url: 'codeCheck.html'
+                    }]
+                }];
+        var role = localStorage.role;
+        $('#nav_menu').tree({
+            data :data,
+            animate: true,
+            cascadeCheck: false,
+            onClick: function(node) {
+                var _url = node.url;
+                var _title = node.text;
+                if ('' == _url) {
+                    return;
+                } else {
+                    var content = '<iframe scrolling="auto" frameborder="0"  src="views/' + _url + '" style="width:100%;height:100%;"></iframe>';
+                    if ($('#main_tabs').tabs('exists', _title)) {
+                        $('#main_tabs').tabs('select', _title);
+                    } else {
+                        $('#main_tabs').tabs('add', {
+                            title: _title,
+                            content: content,
+                            closable: true
+                        });
+                    }
+                }
+            }
+        })
+
+
+        var USERNAM = window.sessionStorage.getItem('username');
+        $('#welcome_info span.l-btn-text').text('欢迎你，' + USERNAM);
+
+        $('#mm1').on('click', ' > div', function() {
+            var _index = $(this).index();
+            _index && Pn.post('/authe/api/logout', {}, function(respData) {
+                if (respData.sta) {
+                    window.sessionStorage.setItem('username', '');
+                } else {
+                    ErrorPop('c', '注销错误！');
+                }
+                window.location.href = ProjectDirectory + '/login.html';
+            });
+        });
+    });
+    </script>
+</body>
+
+</html>
