@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<link rel="Shortcut Icon" href="/app/approval/favicon.ico"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.0/style/weui.min.css">
+		<link href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css" rel="stylesheet">
+		<script src="//res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+		<!--script src="/api/selectedschool"></script>
+		<link th:replace="fragments/wechat_sdk"/>
+		<link th:replace="fragments/error_process_advice"/>
+		<link th:replace="fragments/logon_user"/-->
+		
+	</head>
+	<body>
+		<div id="app"></div>
+		<div id="showbar">
+			<span data-value="0" sec:authorize="hasAuthority('MENU_APP_APPROVAL_PUBLISH') or hasAuthority('ROLE_ADMIN')"></span>
+			<span data-value="1" sec:authorize="hasAuthority('MENU_APP_APPROVAL_RECEIVED') or hasAuthority('ROLE_ADMIN')"></span>
+			<span data-value="2" sec:authorize="hasAuthority('MENU_APP_APPROVAL_SENT') or hasAuthority('ROLE_ADMIN')"></span>
+			<span data-value="3" sec:authorize="hasAuthority('MENU_APP_APPROVAL_CC') or hasAuthority('ROLE_ADMIN')"></span>
+		</div>
+		<script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.js"></script>
+		<script>
+			var management = [];
+			$('#showbar').children('span').each(function(){
+				management.push($(this).attr('data-value'))
+			})
+			window.user={
+        id:"5610",//（d环境5）（d1环境146）
+        name:"学校管理员"
+      }
+      window.selectedSchool={
+        id:"138"//（d环境1）（d1环境17）
+      }
+      window.selectedIdentity=1
+		</script>
+	</body>
+</html>
