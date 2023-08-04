@@ -1,1 +1,0 @@
-import{s as t,n as o}from"./index.7061e8ea.js";function n(n){return t({url:o.countdownCreate,method:"post",data:n})}function e(n){return t({url:o.countdownList,method:"post",data:n})}function a(n){return t({url:o.countdownDelete,method:"post",data:n})}export{n as a,a as b,e as c};

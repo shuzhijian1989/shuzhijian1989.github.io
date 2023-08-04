@@ -1,1 +1,0 @@
-import{s as e,n as t}from"./index.7061e8ea.js";function s(s){return e({url:t.timetableWeekTime,method:"post",data:s})}function a(s){return e({url:t.getClassesByUserId,method:"get",params:s})}export{a as g,s as t};
