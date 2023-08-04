@@ -1,0 +1,1 @@
+function t(t){return!!/^[1][3-9][0-9]{9}$/.test(t)}function e(t){return/^[1][3-9][0-9]{9}$/.test(t)||/^0\d{2,3}-?\d{7,8}$/.test(t)}function n(t){return/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(t)}function r(t){let e=t.replace(/[\u4e00-\u9fa5\s]+/g,"");return e=e.replace(/(^\s*)|(\s*$)/g,""),e=e.replace(/[~'！!@#￥$%^&*()-+_=:]/g,""),e}export{t as a,n as b,r as c,e as v};
