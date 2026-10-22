@@ -1,0 +1,1 @@
+const i={"未开始":"is-idle","未测":"is-idle","未学完":"is-idle","进行中":"is-doing","学习中":"is-doing","已完成":"is-done","已掌握":"is-done","已学完":"is-done","已跳过":"is-skip","薄弱":"is-weak"};function s(s){return i[s]||""}export{s};
