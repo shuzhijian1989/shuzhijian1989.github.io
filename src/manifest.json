@@ -1,0 +1,14 @@
+{
+  "name": "AI学习机",
+  "appid": "",
+  "description": "AI 个性化学习机学生端",
+  "versionName": "0.1.0",
+  "versionCode": "100",
+  "vueVersion": "3",
+  "h5": {
+    "title": "AI学习机",
+    "router": {
+      "mode": "hash"
+    }
+  }
+}

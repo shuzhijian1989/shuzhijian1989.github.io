@@ -1,0 +1,43 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      "^z-paging$": "z-paging/components/z-paging/z-paging.vue"
+    }
+  },
+  "pages": [
+    { "path": "pages/today/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/precision/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/lesson/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/tutor/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/index", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/precision/diagnostic", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/precision/result", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/precision/practice", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/lesson/player", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/textbook", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/wrongs", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/report", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/records", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/parent", "style": { "navigationStyle": "custom" } },
+    { "path": "pages/mine/paper", "style": { "navigationStyle": "custom" } }
+  ],
+  "globalStyle": {
+    "navigationStyle": "custom",
+    "backgroundColor": "#f4f7f5"
+  },
+  "tabBar": {
+    "color": "#8b93a7",
+    "selectedColor": "#1f6f5b",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/today/index", "text": "今日学", "iconPath": "static/tab/today.png", "selectedIconPath": "static/tab/today-on.png" },
+      { "pagePath": "pages/precision/index", "text": "精准学", "iconPath": "static/tab/precision.png", "selectedIconPath": "static/tab/precision-on.png" },
+      { "pagePath": "pages/lesson/index", "text": "互动课", "iconPath": "static/tab/lesson.png", "selectedIconPath": "static/tab/lesson-on.png" },
+      { "pagePath": "pages/tutor/index", "text": "问老师", "iconPath": "static/tab/tutor.png", "selectedIconPath": "static/tab/tutor-on.png" },
+      { "pagePath": "pages/mine/index", "text": "我的", "iconPath": "static/tab/mine.png", "selectedIconPath": "static/tab/mine-on.png" }
+    ]
+  }
+}
