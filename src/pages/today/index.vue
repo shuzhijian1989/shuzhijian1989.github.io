@@ -154,10 +154,10 @@ function shuffleQuestions() {
   return list
 }
 
-/** 从 1.mp4 到 49.mp4 里抽一个。文件在 src/static/video，打包后走 /static/video。 */
+/** 从 1.mp4 到 49.mp4 里抽一个。文件在 src/static/video，地址跟 H5 部署目录走。 */
 function randomVideo() {
   const index = Math.floor(Math.random() * 49) + 1
-  return `/static/video/${index}.mp4`
+  return `${import.meta.env.BASE_URL}static/video/${index}.mp4`
 }
 
 /** 答错时抽一句鼓励语。 */
@@ -266,7 +266,7 @@ function submit() {
 
 <style>
 :deep(.zp-paging-container) {
-  background-image: url('/static/images/1.jpg');
+  background-image: url('../../static/images/1.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
