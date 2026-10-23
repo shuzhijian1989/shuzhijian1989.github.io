@@ -5,7 +5,9 @@
   "scripts": {
     "dev:h5": "uni",
     "build:h5": "uni build",
-    "check:domain": "node --experimental-detect-module src/domain/self-check.js"
+    "check:domain": "node --experimental-detect-module src/domain/self-check.js",
+    "check:midterm": "node --experimental-default-type=module scripts/check-midterm.mjs",
+    "check:handwriting": "node --experimental-default-type=module scripts/check-recognition.mjs"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-alpha-5030220261016001",

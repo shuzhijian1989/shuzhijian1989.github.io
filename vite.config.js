@@ -10,6 +10,6 @@ export default defineConfig({
   plugins: [uni()],
   server: {
     host: '0.0.0.0',
-    port: 5173
+    port: 5176
   }
 })

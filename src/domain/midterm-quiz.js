@@ -1,10 +1,10 @@
 /**
- * 一年级上册期中逐题练习。语文 20 题、数学 20 题。
- * 接口尚未提供，题目写死。页面一次只渲染当前这一题。
- * TODO: 接口地址未提供。接入后替换本文件，页面仍使用 subject、no、stem、options、answer 这些字段。
+ * 一年级上册期中题库240题，每次分科各抽20题。页面一次只显示一道。
  */
 
-export const quizQuestions = [
+import { extraQuizQuestions, addReadingHelp } from './midterm-extra.js'
+
+const originalQuestions = [
   { subject: '语文', no: 1, total: 20, type: '选择题', topic: '声母', score: 5, grade: 'choice', stem: '「爸」的声母是哪一个？', options: [{ key: 'A', text: 'b' }, { key: 'B', text: 'p' }, { key: 'C', text: 'd' }], answer: 'A', explain: '爸的声母是 b。b 的肚子朝右边。', praise: '你把 b 和 d 分开了。' },
   { subject: '语文', no: 2, total: 20, type: '选择题', topic: '韵母', score: 5, grade: 'choice', stem: '「妈」的韵母是哪一个？', options: [{ key: 'A', text: 'a' }, { key: 'B', text: 'o' }, { key: 'C', text: 'e' }], answer: 'A', explain: '妈是 m 加上 a，韵母是 a。', praise: '韵母 a 你读对了。' },
   { subject: '语文', no: 3, total: 20, type: '选择题', topic: '拼读', score: 5, grade: 'choice', stem: 'wǒ 是哪个字？', options: [{ key: 'A', text: '我' }, { key: 'B', text: '鸟' }, { key: 'C', text: '月' }], answer: 'A', explain: 'wǒ 拼出来就是「我」。', praise: '这个拼音你拼对了。' },
@@ -47,7 +47,31 @@ export const quizQuestions = [
   { subject: '数学', no: 20, total: 20, type: '应用题', topic: '排队', score: 5, grade: 'apply', stem: '小华前面有 4 人，后面有 3 人。这一队一共有几人？写出列式和答语。', equation: ['4+1+3=8', '4+3+1=8', '3+1+4=8'], result: '8', replies: ['一共', '有'], answer: '4+1+3=8，一共有8人。', explain: '别忘了加上小华自己，4+1+3=8。', praise: '你把小华自己也数进去了。' }
 ]
 
+export const quizQuestions = [...originalQuestions.map(q => ({ ...q, total: 120 })), ...extraQuizQuestions]
+  .map(q => ({ ...q, stem: addReadingHelp(q.stem), ...(q.picture ? { picture: addReadingHelp(q.picture) } : {}) }))
+
+/** 分科抽样后混排，题库顺序与稳定编号不变。 */
+export function createQuiz(random = Math.random) {
+  function shuffle(list) {
+    const result = list.slice()
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(random() * (i + 1))
+      ;[result[i], result[j]] = [result[j], result[i]]
+    }
+    return result
+  }
+  return shuffle(['语文', '数学'].flatMap(subject => {
+    const pool = quizQuestions.filter(q => q.subject === subject)
+    const isAdvanced = q => q.level === 'advanced' || ['write', 'apply'].includes(q.grade)
+    return [...shuffle(pool.filter(isAdvanced)).slice(0, 4), ...shuffle(pool.filter(q => !isAdvanced(q))).slice(0, 16)]
+  }))
+}
+
 const tipOf = {
+  图形分解: '用纸折一个正方形，沿折痕数一数分出了几块，再数大图形。',
+  按规律填数: '每天做 3 组数列，先说每次多几、少几或哪几个数重复。',
+  等量代换: '每个小盒放 2 个积木，摆 3 个盒子，数一数一共几个。',
+  简单推理: '用红黄蓝三个盒子藏一块积木，听两条提示，找出它在哪里。',
   声母: '每天看着 b、p、d、q，各读 5 遍。',
   韵母: 'a、o、e、i、u、ü 按顺序每天读一遍。',
   拼读: '拿 5 个拼音，先读声母再读韵母，拼给大人听。',
@@ -140,14 +164,21 @@ function gradeWrite(question, text) {
 function gradeApply(question, text) {
   const notes = []
   let score = 0
-  const given = normalize(text)
-  const equationOk = question.equation.some((item) => given.includes(normalize(item)))
+  const given = normalize(text).replace(/：/g, ':')
+  const equations = given.match(/\d+(?:[+-]\d+)+=\d+/g) || []
+  const canonical = equation => {
+    const [left, right] = equation.split('=')
+    return /^\d+(?:\+\d+)+$/.test(left) ? `${left.split('+').sort((a, b) => Number(a) - Number(b)).join('+')}=${right}` : equation
+  }
+  const equationOk = equations.some(equation => question.equation.some(item => canonical(normalize(item)) === canonical(equation)))
   if (equationOk) {
     score += 3
   } else {
     notes.push('列式要写出来')
   }
-  if (given.includes(question.result)) {
+  const results = equations.map(equation => equation.split('=')[1])
+    .concat((given.replace(/\d+(?:[+-]\d+)+=\d+/g, '').match(/\d+/g) || []))
+  if (results.includes(question.result)) {
     score += 1
   } else {
     notes.push('得数再算一次')
@@ -189,7 +220,7 @@ export function gradeQuizAnswer(question, raw) {
     score,
     correct,
     comment,
-    answer: question.answer,
+    answer: question.options ? `${question.answer}（${question.options.find(option => option.key === question.answer).text}）` : question.answer,
     explain: question.explain,
     note
   }
@@ -227,7 +258,7 @@ export function buildQuizReport(records) {
     chineseWeak,
     mathWeak,
     summary: summaryOf(totalScore, chineseScore, mathScore),
-    suggestions: suggestions.length ? suggestions.slice(0, 3) : ['每天读 5 个拼音，再写 5 道 20 以内加减法。', '做完一题，用自己的话把答案再说一遍。']
+    suggestions: [...new Set([...suggestions, '每天读 5 个拼音，再写 5 道 20 以内加减法。', '做完一题，用自己的话把答案再说一遍。'])].slice(0, 3)
   }
 }
 

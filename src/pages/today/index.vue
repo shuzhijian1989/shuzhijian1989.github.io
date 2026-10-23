@@ -6,24 +6,26 @@
     <view v-if="phase === 'ready'" class="sheet">
       <view class="card">
         <text class="title">期中练习</text>
-        <text class="rule">我们一共做 40 道题，语文 20 道、数学 20 道。顺序是打乱的，提交过的题不会再出现。</text>
+        <text class="rule">我们一共做40道题，语文20道、数学20道。题目是从大题库里随机打乱的，提交过的题不会再出现。</text>
+        <text class="rule">题库共240题，每科120题。每题5分，总分200分。</text>
         <text class="rule">准备好了吗？点「开始」，我们就做第 1 题。</text>
         <button class="primary start" @click="start">开始</button>
       </view>
     </view>
     <view v-else-if="phase === 'quiz'" class="sheet">
       <view v-if="lastResult" class="card" :class="lastResult.correct ? 'feedback-ok' : 'feedback-miss'">
-        <text class="feedback-line">{{ lastResult.comment }}</text>
+        <text class="feedback-line">{{ lastResult.correct ? '答对了。' : '这题还没答对。' }}{{ lastResult.comment }}</text>
         <text v-if="!lastResult.correct" class="feedback-line">正确答案：{{ lastResult.answer }}</text>
         <text v-if="!lastResult.correct" class="feedback-line">{{ lastResult.explain }}</text>
         <text v-if="lastResult.note" class="feedback-line">扣分：{{ lastResult.note }}</text>
+        <text v-if="lastResult.recognizedText" class="feedback-line">手写识别：{{ lastResult.recognizedText }}</text>
         <text class="feedback-line">这题 {{ lastResult.score }} 分</text>
       </view>
       <view class="card">
         <text class="eyebrow">{{ current.subject }} 第{{ index + 1 }}题 / 共{{ quizOrder.length }}题</text>
-        <text class="muted">{{ current.type }} · {{ current.score }}分</text>
         <text v-if="current.picture" class="picture">{{ current.picture }}</text>
         <text class="title question">{{ current.stem }}</text>
+        <text class="muted">{{ current.type }} · {{ current.score }}分</text>
         <view v-if="current.options">
           <view v-for="option in current.options" :key="option.key" class="option"
             :class="{ 'option--on': option.key === selected }" @click="selected = option.key">
@@ -31,18 +33,21 @@
             <text class="option__text">{{ option.text }}</text>
           </view>
         </view>
-        <textarea v-else-if="current.grade === 'write' || current.grade === 'apply'" v-model="draft" class="answer-box"
-          placeholder="写在这里" />
-        <input v-else v-model="draft" class="answer-input" placeholder="写在这里" />
-        <text class="ask">【请作答】写好后点提交。</text>
+        <HandwritingBoard v-else :key="index" v-model="draft" :local-enabled="supportsLocalHandwriting(current)" @change="changeHandwriting" @typing="typedAnswer" />
+        <view v-if="needsRecognitionCheck" class="card">
+          <text class="feedback-line">刚才的笔迹有点模糊，识别为：{{ draft }}</text>
+          <text class="feedback-line">请检查下方输入框，改好后点“确认提交”，也可以清空重写。</text>
+        </view>
+        <text class="ask">【请作答】{{ current.options ? '点选一个选项，再点提交。' : current.grade === 'apply' ? '写列式和答语，如：8-5=3，还剩3个。再点提交。' : current.grade === 'write' ? '写一句完整的话，再点提交。' : '写出答案，再点提交。' }}</text>
       </view>
     </view>
     <view v-else class="sheet">
       <view v-if="lastResult" class="card" :class="lastResult.correct ? 'feedback-ok' : 'feedback-miss'">
-        <text class="feedback-line">{{ lastResult.comment }}</text>
+        <text class="feedback-line">{{ lastResult.correct ? '答对了。' : '这题还没答对。' }}{{ lastResult.comment }}</text>
         <text v-if="!lastResult.correct" class="feedback-line">正确答案：{{ lastResult.answer }}</text>
         <text v-if="!lastResult.correct" class="feedback-line">{{ lastResult.explain }}</text>
         <text v-if="lastResult.note" class="feedback-line">扣分：{{ lastResult.note }}</text>
+        <text v-if="lastResult.recognizedText" class="feedback-line">手写识别：{{ lastResult.recognizedText }}</text>
         <text class="feedback-line">这题 {{ lastResult.score }} 分</text>
       </view>
       <view class="card">
@@ -53,7 +58,7 @@
         <text class="block-name">【语文】得分 {{ report.chineseScore }} / 100</text>
         <view v-if="report.chineseWrongs.length">
           <view v-for="item in report.chineseWrongs" :key="'cn-' + item.no" class="wrong">
-            <text class="wrong-line">第{{ item.no }}题 {{ item.stem }}</text>
+            <text class="wrong-line">第{{ item.quizNo }}题 · {{ item.type }} · {{ item.stem }}</text>
             <text class="wrong-line">你的答案：{{ item.input }}</text>
             <text class="wrong-line">正确答案：{{ item.answer }}</text>
             <text class="wrong-line">{{ item.reason }}</text>
@@ -64,7 +69,7 @@
         <text class="block-name">【数学】得分 {{ report.mathScore }} / 100</text>
         <view v-if="report.mathWrongs.length">
           <view v-for="item in report.mathWrongs" :key="'ma-' + item.no" class="wrong">
-            <text class="wrong-line">第{{ item.no }}题 {{ item.stem }}</text>
+            <text class="wrong-line">第{{ item.quizNo }}题 · {{ item.type }} · {{ item.stem }}</text>
             <text class="wrong-line">你的答案：{{ item.input }}</text>
             <text class="wrong-line">正确答案：{{ item.answer }}</text>
             <text class="wrong-line">{{ item.reason }}</text>
@@ -79,27 +84,23 @@
       </view>
     </view>
     <template #bottom>
-      <view v-if="phase === 'quiz'" class="bottom-bar" :class="{ actions: index > 0 }">
-        <button v-if="index > 0" class="ghost" :disabled="submitting" @click="goPrev">返回上一题</button>
-        <button class="primary" :loading="submitting" :disabled="submitting" @click="submit">提交</button>
+      <view v-if="phase === 'quiz'" class="bottom-bar">
+        <button class="primary" :loading="submitting" :disabled="submitting" @click="submit()">{{ needsRecognitionCheck ? '确认提交' : '提交' }}</button>
       </view>
     </template>
 
   </z-paging>
-  <view v-if="showVideo" class="video-mask">
-    <view class="video-dialog">
-      <text class="video-title">答对了，看一段【童年】的视频</text>
-      <video class="reward-video" :src="videoSrc" autoplay controls object-fit="contain" @ended="closeVideo" />
-      <button class="primary video-close" @click="closeVideo">看完了</button>
-    </view>
-  </view>
+
 
 </template>
 
 <script setup>
 // 期中逐题练习和评分
-import { buildQuizReport, gradeQuizAnswer, quizQuestions } from '@/domain/midterm-quiz.js'
-import { computed, ref } from 'vue'
+import { buildQuizReport, gradeQuizAnswer, createQuiz } from '@/domain/midterm-quiz.js'
+import { computed, ref, watch } from 'vue'
+import HandwritingBoard from '@/components/handwriting-board/handwriting-board.vue'
+import { saveQuizWrong } from '@/domain/quiz-wrongs.js'
+import { recognizeHandwriting, supportsLocalHandwriting } from '@/domain/handwriting.js'
 
 const encouragements = [
   '没关系，下一题慢慢看。',
@@ -112,13 +113,15 @@ const encouragements = [
 const phase = ref('ready')
 const index = ref(0)
 const draft = ref('')
+const handwriting = ref([])
+const needsRecognitionCheck = ref(false)
+const recognizedDraft = ref(false)
+watch(index, () => { handwriting.value = []; needsRecognitionCheck.value = false; recognizedDraft.value = false })
 const selected = ref('')
 const submitting = ref(false)
 const lastResult = ref(null)
 const records = ref([])
 const quizOrder = ref([])
-const showVideo = ref(false)
-const videoSrc = ref('')
 
 /** 当前这一题。顺序在开始时打乱，提交过的题只占一个位置。 */
 const current = computed(() => quizOrder.value[index.value])
@@ -142,34 +145,14 @@ const mathWeakText = computed(() => {
   return report.value.mathWeak.join('、')
 })
 
-/** 打乱题目。同一题在这一轮里只出现一次。 */
-function shuffleQuestions() {
-  const list = quizQuestions.slice()
-  for (let i = list.length - 1; i > 0; i -= 1) {
-    const swap = Math.floor(Math.random() * (i + 1))
-    const item = list[i]
-    list[i] = list[swap]
-    list[swap] = item
-  }
-  return list
-}
-
-/** 从 1.mp4 到 49.mp4 里抽一个。文件在 src/static/video，地址跟 H5 部署目录走。 */
-function randomVideo() {
-  const index = Math.floor(Math.random() * 49) + 1
-  return `${import.meta.env.BASE_URL}static/video/${index}.mp4`
-}
-
 /** 答错时抽一句鼓励语。 */
 function randomEncouragement() {
   const index = Math.floor(Math.random() * encouragements.length)
   return encouragements[index]
 }
 
-/** 视频关掉后再进入下一题；最后一题进入成绩报告。 */
+/** 提交后进入下一题；第40题提交后显示成绩报告。 */
 function goNext() {
-  showVideo.value = false
-  videoSrc.value = ''
   if (index.value >= quizOrder.value.length - 1) {
     phase.value = 'report'
     return
@@ -179,42 +162,16 @@ function goNext() {
 
 /** 从准备页进入第 1 题。 */
 function start() {
-  quizOrder.value = shuffleQuestions()
+  handwriting.value = []
+  needsRecognitionCheck.value = false
+  recognizedDraft.value = false
+  quizOrder.value = createQuiz()
   phase.value = 'quiz'
   index.value = 0
   draft.value = ''
   selected.value = ''
   lastResult.value = null
   records.value = []
-  showVideo.value = false
-  videoSrc.value = ''
-}
-
-/** 回到上一题并清掉那一题的得分，方便重做。第 1 题没有上一题。 */
-function goPrev() {
-  if (submitting.value || index.value <= 0) {
-    return
-  }
-  const videoOpen = showVideo.value
-  showVideo.value = false
-  videoSrc.value = ''
-  if (videoOpen) {
-    records.value.pop()
-  }
-  index.value -= 1
-  records.value.pop()
-  const prev = records.value[records.value.length - 1]
-  lastResult.value = prev ? prev.result : null
-  draft.value = ''
-  selected.value = ''
-}
-
-/** 关闭奖励视频并继续。播完和按钮可能接连触发，只进入一次。 */
-function closeVideo() {
-  if (!showVideo.value) {
-    return
-  }
-  goNext()
 }
 
 /** 选择题用选项，其余题用输入框。 */
@@ -225,36 +182,66 @@ function answerText() {
   return draft.value
 }
 
-/** 提交当前答案。空答案不进入下一题。 */
+/** 笔迹更改后，先前识别的文字作废，防止清空或重写后提交旧答案。 */
+function changeHandwriting(strokes) {
+  handwriting.value = strokes
+  if (recognizedDraft.value) draft.value = ''
+  recognizedDraft.value = false
+  needsRecognitionCheck.value = false
+}
+
+function typedAnswer() {
+  recognizedDraft.value = false
+  needsRecognitionCheck.value = false
+}
+
+/** 提交当前答案。先识别笔迹，再用同一套文字评分规则计分。 */
 function submit() {
+  if (submitting.value || phase.value !== 'quiz') return
   submitting.value = true
   try {
-    const input = answerText()
+    let input = answerText()
+    const handwritten = !current.value.options && !input.trim() && handwriting.value.length > 0
+    if (handwritten) {
+      if (!supportsLocalHandwriting(current.value)) throw new Error('这类题请在下方输入答案，可用手机输入法手写')
+      const recognition = recognizeHandwriting(handwriting.value)
+      draft.value = recognition.text
+      recognizedDraft.value = true
+      if (recognition.uncertain) {
+        needsRecognitionCheck.value = true
+        return
+      }
+      input = recognition.text
+    }
     const result = gradeQuizAnswer(current.value, input)
+    if (recognizedDraft.value) result.recognizedText = input
     const reason = result.note || result.explain
-    records.value.push({
+    const record = {
       subject: current.value.subject,
       no: current.value.no,
+      quizNo: index.value + 1,
+      type: current.value.type,
       stem: current.value.stem,
       topic: current.value.topic,
       input,
-      answer: current.value.answer,
+      handwriting: handwriting.value.map(stroke => stroke.map(point => ({ ...point }))),
+      answer: result.answer,
       score: result.score,
       full: current.value.score,
       reason,
       result
-    })
+    }
+    saveQuizWrong(record)
+    records.value.push(record)
     if (!result.correct) {
       result.comment = randomEncouragement()
     }
     lastResult.value = result
+    needsRecognitionCheck.value = false
+    recognizedDraft.value = false
+    handwriting.value = []
     draft.value = ''
     selected.value = ''
-    if (result.correct) {
-      videoSrc.value = randomVideo()
-      showVideo.value = true
-      return
-    }
     goNext()
   } catch (error) {
     uni.showToast({ title: error.message, icon: 'none' })
@@ -266,7 +253,7 @@ function submit() {
 
 <style>
 :deep(.zp-paging-container) {
-  background-image: url('../../static/images/1.jpg');
+  /* background-image: url('../../static/images/1.jpg');*/
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -336,6 +323,10 @@ function submit() {
 .summary {
   display: block;
   line-height: 1.6;
+}
+
+.ghost {
+  margin: 10px 0;
 }
 
 .bridge {

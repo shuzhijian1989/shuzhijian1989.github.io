@@ -1,0 +1,30 @@
+const fs = require('node:fs')
+const vm = require('node:vm')
+const assert = require('node:assert/strict')
+const memory = {}
+const storage = {
+  getStorageSync: key => memory[key],
+  setStorageSync: (key, value) => { memory[key] = value }
+}
+const context = vm.createContext({ uni: storage })
+vm.runInContext(fs.readFileSync('src/domain/quiz-wrongs.js', 'utf8').replace(/export /g, ''), context)
+const run = code => vm.runInContext(code, context)
+assert.equal(run('readQuizWrongs().length'), 0)
+run("saveQuizWrong({ subject: '数学', no: 1, score: 0, full: 5, input: '>' })")
+assert.equal(run('readQuizWrongs().length'), 1)
+run("saveQuizWrong({ subject: '数学', no: 1, score: 2, full: 5, input: '=' })")
+assert.equal(run('readQuizWrongs().length'), 1)
+assert.equal(run('readQuizWrongs()[0].mistakes'), 2)
+assert.equal(run('readQuizWrongs()[0].input'), '=')
+run("saveQuizWrong({ subject: '语文', no: 1, score: 0, full: 5, handwriting: [[{ x: 1, y: 2 }]] })")
+assert.equal(run('readQuizWrongs().length'), 2)
+assert.equal(run('readQuizWrongs()[0].handwriting[0][0].x'), 1)
+run("saveQuizWrong({ subject: '数学', no: 1, score: 5, full: 5 })")
+assert.equal(run('readQuizWrongs().length'), 2)
+assert.equal(run('readQuizWrongs()[1].mistakes'), 2)
+const reopened = vm.createContext({ uni: storage })
+vm.runInContext(fs.readFileSync('src/domain/quiz-wrongs.js', 'utf8').replace(/export /g, ''), reopened)
+assert.equal(vm.runInContext('readQuizWrongs().length', reopened), 2)
+const pages = JSON.parse(fs.readFileSync('src/pages.json', 'utf8'))
+assert.equal(pages.tabBar.list.find(item => item.pagePath === 'pages/mine/wrongs')?.text, '错题库')
+console.log('通过：空错题库、错误/部分分收录、同题去重、跨学科区分、笔迹持久化、正确题不收录、重新读取、导航入口。')
