@@ -43,6 +43,7 @@ assert.equal(supportsLocalHandwriting({ subject: '数学', grade: 'fill', topic:
 
 const saved = [], toasts = []
 const context = vm.createContext({
+  onHide() {}, onBeforeUnmount() {}, setTimeout: () => 1, clearTimeout() {},
   ref: value => ({ value }), computed: getter => ({ get value() { return getter() } }), watch() {},
   gradeQuizAnswer, recognizeHandwriting, supportsLocalHandwriting,
   createQuiz: () => [], buildQuizReport: () => ({}), saveQuizWrong: record => saved.push(record),
@@ -58,6 +59,9 @@ if (run('needsRecognitionCheck.value')) run('submit()')
 assert.equal(run('records.value.length'), 1)
 assert.equal(run('records.value[0].input'), '9')
 assert.equal(run('records.value[0].score'), 5)
+assert.equal(run('celebrating.value'), true)
+assert.equal(run('index.value'), 0)
+run('finishCelebration()')
 assert.equal(run('index.value'), 1)
 assert.equal(toasts.length, 0)
 // 同一笔迹面对标准答案7时仍识别为9，并判错，不能按答案猜笔迹。

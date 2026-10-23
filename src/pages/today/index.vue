@@ -85,19 +85,32 @@
     </view>
     <template #bottom>
       <view v-if="phase === 'quiz'" class="bottom-bar">
-        <button class="primary" :loading="submitting" :disabled="submitting" @click="submit()">{{ needsRecognitionCheck ? '确认提交' : '提交' }}</button>
+        <button class="primary" :loading="submitting" :disabled="submitting || celebrating" @click="submit()">{{ needsRecognitionCheck ? '确认提交' : '提交' }}</button>
       </view>
     </template>
 
   </z-paging>
-
+  <view v-if="celebrating" class="fireworks-mask" role="status" aria-live="polite" @touchmove.stop.prevent @click.stop>
+    <view v-for="(burst, burstIndex) in fireworks" :key="burstIndex" class="fireworks-burst"
+      :style="{ left: burst.left, top: burst.top, '--burst-delay': burst.delay, '--burst-color': burst.color }">
+      <view v-for="ray in 16" :key="ray" class="fireworks-ray" :style="{ transform: `rotate(${ray * 22.5}deg)` }">
+        <view class="fireworks-spark" />
+      </view>
+    </view>
+    <view class="fireworks-message">
+      <text class="fireworks-title">答对啦！</text>
+      <text class="fireworks-praise">{{ lastResult.comment }}</text>
+      <text class="fireworks-next">{{ index === quizOrder.length - 1 ? '马上看看成绩吧' : '马上进入下一题' }}</text>
+    </view>
+  </view>
 
 </template>
 
 <script setup>
 // 期中逐题练习和评分
 import { buildQuizReport, gradeQuizAnswer, createQuiz } from '@/domain/midterm-quiz.js'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onBeforeUnmount } from 'vue'
+import { onHide } from '@dcloudio/uni-app'
 import HandwritingBoard from '@/components/handwriting-board/handwriting-board.vue'
 import { saveQuizWrong } from '@/domain/quiz-wrongs.js'
 import { recognizeHandwriting, supportsLocalHandwriting } from '@/domain/handwriting.js'
@@ -122,6 +135,34 @@ const submitting = ref(false)
 const lastResult = ref(null)
 const records = ref([])
 const quizOrder = ref([])
+const celebrating = ref(false)
+let celebrationTimer = null
+const fireworks = [
+  { left: '25%', top: '32%', delay: '0s', color: '#ffd166' },
+  { left: '78%', top: '28%', delay: '0.35s', color: '#83e8dc' },
+  { left: '52%', top: '62%', delay: '0.7s', color: '#ffa8d6' }
+]
+
+function clearCelebration() {
+  if (celebrationTimer !== null) clearTimeout(celebrationTimer)
+  celebrationTimer = null
+  celebrating.value = false
+}
+
+/** 定时结束和离开页面都可能触发，只进入下一题一次。 */
+function finishCelebration() {
+  if (!celebrating.value) return
+  clearCelebration()
+  goNext()
+}
+
+function celebrate() {
+  celebrating.value = true
+  celebrationTimer = setTimeout(finishCelebration, 2400)
+}
+
+onHide(finishCelebration)
+onBeforeUnmount(clearCelebration)
 
 /** 当前这一题。顺序在开始时打乱，提交过的题只占一个位置。 */
 const current = computed(() => quizOrder.value[index.value])
@@ -162,6 +203,7 @@ function goNext() {
 
 /** 从准备页进入第 1 题。 */
 function start() {
+  clearCelebration()
   handwriting.value = []
   needsRecognitionCheck.value = false
   recognizedDraft.value = false
@@ -197,7 +239,7 @@ function typedAnswer() {
 
 /** 提交当前答案。先识别笔迹，再用同一套文字评分规则计分。 */
 function submit() {
-  if (submitting.value || phase.value !== 'quiz') return
+  if (submitting.value || celebrating.value || phase.value !== 'quiz') return
   submitting.value = true
   try {
     let input = answerText()
@@ -242,7 +284,8 @@ function submit() {
     handwriting.value = []
     draft.value = ''
     selected.value = ''
-    goNext()
+    if (result.correct) celebrate()
+    else goNext()
   } catch (error) {
     uni.showToast({ title: error.message, icon: 'none' })
   } finally {
@@ -252,6 +295,44 @@ function submit() {
 </script>
 
 <style>
+.fireworks-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, rgba(23, 57, 73, .94), rgba(8, 19, 39, .97));
+  touch-action: none;
+}
+.fireworks-burst { position: absolute; width: 0; height: 0; color: var(--burst-color); }
+.fireworks-ray { position: absolute; width: 0; height: 0; }
+.fireworks-spark {
+  position: absolute;
+  left: -3px;
+  top: -6px;
+  width: 6px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor, 0 16px 3px currentColor;
+  opacity: 0;
+  animation: fireworks-bloom 1.5s ease-out var(--burst-delay) both;
+}
+.fireworks-message { position: relative; z-index: 1; padding: 24px; text-align: center; color: #fff; }
+.fireworks-title { display: block; font-size: 42px; font-weight: 700; color: #ffe59b; }
+.fireworks-praise { display: block; margin-top: 16px; font-size: 20px; line-height: 1.6; }
+.fireworks-next { display: block; margin-top: 14px; font-size: 14px; color: #d9e9f5; }
+@keyframes fireworks-bloom {
+  0% { opacity: 0; transform: translateY(0) scale(.3); }
+  12% { opacity: 1; }
+  65% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-145px) scale(.3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fireworks-spark { animation: none; opacity: .7; transform: translateY(-90px); box-shadow: none; }
+}
 :deep(.zp-paging-container) {
   /* background-image: url('../../static/images/1.jpg');*/
   background-size: cover;

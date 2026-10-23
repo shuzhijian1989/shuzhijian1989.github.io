@@ -49,7 +49,13 @@ assert.equal(gradeQuizAnswer(queue, '3+4+1=8，一共有8人。').score, 5)
 const memory = {}
 const storage = { getStorageSync: key => memory[key], setStorageSync: (key, value) => { memory[key] = value } }
 const toasts = []
+const timers = new Map()
+let timerId = 0
+let hidePage, unmountPage
 const context = vm.createContext({
+  onHide: callback => { hidePage = callback }, onBeforeUnmount: callback => { unmountPage = callback },
+  setTimeout: callback => { timers.set(++timerId, callback); return timerId },
+  clearTimeout: id => timers.delete(id),
   ref: value => ({ value }), computed: getter => ({ get value() { return getter() } }), watch() {},
   createQuiz, gradeQuizAnswer, buildQuizReport, saveQuizWrong: record => saveQuizWrong(record, storage),
   uni: { showToast: toast => toasts.push(toast) }
@@ -70,6 +76,18 @@ for (let i = 0; i < 40; i++) {
   context.testAnswer = answer
   run('if (current.value.options) selected.value = testAnswer; else draft.value = testAnswer; submit()')
   assert.equal(run('records.value.length'), i + 1)
+  if (i > 0) {
+    assert.equal(run('celebrating.value'), true)
+    assert.equal(run('index.value'), i, '烟花结束前不进入下一题')
+    run('submit()')
+    assert.equal(run('records.value.length'), i + 1, '烟花期间重复提交不重复计分')
+    assert.equal(timers.size, 1)
+    const callback = [...timers.values()][0]
+    callback()
+    assert.equal(run('celebrating.value'), false)
+    callback()
+    assert.equal(run('index.value'), Math.min(i + 1, 39), '重复结束回调不能跳题')
+  } else assert.equal(run('celebrating.value'), false, '答错不放烟花')
   if (i < 39) assert.equal(run('phase.value'), 'quiz')
 }
 assert.equal(run('phase.value'), 'report')
@@ -80,4 +98,12 @@ assert.ok(run('records.value[0].type'))
 run('submit()')
 assert.equal(run('records.value.length'), 40)
 assert.ok(!page.includes('返回上一题'))
+run("start(); if (current.value.options) selected.value = current.value.answer; else draft.value = current.value.answer; submit()")
+assert.equal(run('celebrating.value'), true)
+hidePage()
+assert.equal(run('index.value'), 1)
+assert.equal(timers.size, 0, '离开页面清理定时器')
+run("if (current.value.options) selected.value = current.value.answer; else draft.value = current.value.answer; submit()")
+unmountPage()
+assert.equal(timers.size, 0, '卸载后不保留回调')
 console.log('通过：240题结构与答案校验、200轮分科随机抽样、每科4道进阶题、满分报告、部分给分、完整40题流程、空答拦截、错题入库与结束后重复提交拦截。')
